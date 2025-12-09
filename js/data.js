@@ -303,13 +303,13 @@ const xploitBaseData = {
                         },
                         {
                             name: "Check Bad Chars",
-                            command: "\\x00\\x01\\x02...\\xff",
+                            command: String.raw`\x00\x01\x02...\xff`,
                             description: "Send all hex characters to identify bad characters"
                         },
                         {
                             name: "Find JMP ESP",
-                            command: "!mona find -s \"\\xff\\xe4\" -m <module>",
-                            description: "Find JMP ESP instruction (\\xff\\xe4) in module"
+                            command: String.raw`!mona find -s "\xff\xe4" -m <module>`,
+                            description: String.raw`Find JMP ESP instruction (\xff\xe4) in module`
                         }
                     ]
                 },                {
@@ -539,7 +539,7 @@ const xploitBaseData = {
                         },
                         {
                             name: "AES ECB Detection",
-                            command: "hexdump -C ciphertext.bin | grep --color='auto' -E '(^.{8}(\\s+\\w+){2}\\s+)\\1'",
+                            command: String.raw`hexdump -C ciphertext.bin | grep --color='auto' -E '(^.{8}(\s+\w+){2}\s+)\1'`,
                             description: "Detect ECB mode by finding repeated blocks"
                         },
                         {
@@ -1146,7 +1146,7 @@ const xploitBaseData = {
                     commands: [
                         {
                             name: "Collect Data",
-                            command: ".\\SharpHound.exe -c All",
+                            command: String.raw`.\SharpHound.exe -c All`,
                             description: "Collect all data from domain for analysis"
                         },
                         {

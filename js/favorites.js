@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     // Initialize favorites and history
-    window.XploitBaseFavorites = {
+    globalThis.XploitBaseFavorites = {
         add: function(command, toolName, category) {
             const favorites = this.getAll();
             const favorite = {
@@ -15,13 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Check if already exists
             const exists = favorites.some(fav => fav.command === command);
-            if (!exists) {
+            if (exists) {
+                showToast('Already in favorites!');
+            } else {
                 favorites.push(favorite);
                 localStorage.setItem('xploitbase_favorites', JSON.stringify(favorites));
                 showToast('Added to favorites!');
                 this.updateFavoritesPanel();
-            } else {
-                showToast('Already in favorites!');
             }
         },
         
@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    window.XploitBaseHistory = {
+    globalThis.XploitBaseHistory = {
         add: function(command, toolName, category) {
             const history = this.getAll();
             const entry = {
@@ -86,8 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     };
     
-    // Create favorites panel
-    window.createFavoritesPanel = function() {
+    // Create Favorites Panel
+    globalThis.createFavoritesPanel = function() {
         const panel = document.createElement('div');
         panel.id = 'favoritesPanel';
         panel.className = 'side-panel';
@@ -117,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 tabs.forEach(t => t.classList.remove('active'));
                 this.classList.add('active');
                 
-                const tabName = this.getAttribute('data-tab');
+                const tabName = this.dataset.tab;
                 const content = panel.querySelector('.panel-content');
                 
                 if (tabName === 'favorites') {
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <div class="favorite-command">
                         <code>${fav.command}</code>
                         <div class="favorite-actions">
-                            <button class="fav-copy" data-command="${fav.command.replace(/"/g, '&quot;')}" title="Copy">
+                            <button class="fav-copy" data-command="${fav.command.replaceAll('"', '&quot;')}" title="Copy">
                                 <i class="fas fa-copy"></i>
                             </button>
                             <button class="fav-remove" data-id="${fav.id}" title="Remove">
@@ -175,7 +175,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Add event listeners
         container.querySelectorAll('.fav-copy').forEach(btn => {
             btn.addEventListener('click', function() {
-                const cmd = this.getAttribute('data-command');
+                const cmd = this.dataset.command;
                 navigator.clipboard.writeText(cmd);
                 showToast('Copied to clipboard!');
             });
@@ -183,7 +183,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         container.querySelectorAll('.fav-remove').forEach(btn => {
             btn.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
+                const id = this.dataset.id;
                 XploitBaseFavorites.remove(id);
             });
         });
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     </div>
                     <div class="history-command">
                         <code>${entry.command}</code>
-                        <button class="history-copy" data-command="${entry.command.replace(/"/g, '&quot;')}" title="Copy">
+                        <button class="history-copy" data-command="${entry.command.replaceAll('"', '&quot;')}" title="Copy">
                             <i class="fas fa-copy"></i>
                         </button>
                     </div>
@@ -243,15 +243,15 @@ document.addEventListener('DOMContentLoaded', function() {
         
         container.querySelectorAll('.history-copy').forEach(btn => {
             btn.addEventListener('click', function() {
-                const cmd = this.getAttribute('data-command');
+                const cmd = this.dataset.command;
                 navigator.clipboard.writeText(cmd);
                 showToast('Copied to clipboard!');
             });
         });
-    };
+    }
     
     function getTimeAgo(date) {
-        const seconds = Math.floor((new Date() - date) / 1000);
+        const seconds = Math.floor((Date.now() - date) / 1000);
         
         if (seconds < 60) return 'just now';
         if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';

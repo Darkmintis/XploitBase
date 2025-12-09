@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
     let timerElapsed = 0;
     let timerPaused = false;
     
-    window.createTimerPanel = function() {
+    globalThis.createTimerPanel = function() {
         const panel = document.createElement('div');
         panel.id = 'timerPanel';
         panel.className = 'side-panel timer-panel';
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function addTask() {
         const taskText = prompt('Enter task description:');
-        if (taskText && taskText.trim()) {
+        if (taskText?.trim()) {
             const tasks = getTasks();
             const task = {
                 id: Date.now().toString(),
@@ -235,17 +235,17 @@ document.addEventListener('DOMContentLoaded', function() {
         tasksList.innerHTML = html;
     }
     
-    window.toggleTask = function(id) {
+    globalThis.toggleTask = function(id) {
         const tasks = getTasks();
         const task = tasks.find(t => t.id === id);
         if (task) {
             task.completed = !task.completed;
             saveTasks(tasks);
-            loadTasks();
+            renderTasks();
         }
     };
     
-    window.deleteTask = function(id) {
+    globalThis.deleteTask = function(id) {
         let tasks = getTasks();
         tasks = tasks.filter(t => t.id !== id);
         saveTasks(tasks);

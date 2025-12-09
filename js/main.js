@@ -51,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Handle category card clicks
     categoryCards.forEach(card => {
         card.addEventListener('click', function() {
-            const categoryId = this.getAttribute('data-category');
+            const categoryId = this.dataset.category;
             navigateToCategory(categoryId);
         });
     });
@@ -72,7 +72,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
+    globalThis.addEventListener('click', function(event) {
         if (event.target === modal) {
             modal.style.display = 'none';
         }
@@ -218,7 +218,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 const commandMatches = tool.commands.filter(cmd => 
                     cmd.name.toLowerCase().includes(searchTerm) || 
                     cmd.command.toLowerCase().includes(searchTerm) || 
-                    (cmd.description && cmd.description.toLowerCase().includes(searchTerm))
+                    cmd.description?.toLowerCase().includes(searchTerm)
                 );
                 
                 if (toolMatches || commandMatches.length > 0) {
@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toast.style.opacity = '0';
             toast.style.transition = 'opacity 0.5s ease';
             setTimeout(() => {
-                document.body.removeChild(toast);
+                toast.remove();
             }, 500);
         }, 2000);
     }

@@ -1,7 +1,7 @@
 // Notes System for XploitBase
 
 document.addEventListener('DOMContentLoaded', function() {
-    window.createNotesPanel = function() {
+    globalThis.createNotesPanel = function() {
         const panel = document.createElement('div');
         panel.id = 'notesPanel';
         panel.className = 'side-panel notes-panel';
@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function createNewNote() {
         const title = prompt('Note title:');
-        if (!title || !title.trim()) return;
+        if (!title?.trim()) return;
         
         const notes = getNotes();
         const note = {
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         notesList.innerHTML = html;
     }
     
-    window.editNote = function(id) {
+    globalThis.editNote = function(id) {
         const notes = getNotes();
         const note = notes.find(n => n.id === id);
         
@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('noteContent').focus();
     };
     
-    window.saveCurrentNote = function(id) {
+    globalThis.saveCurrentNote = function(id) {
         const notes = getNotes();
         const note = notes.find(n => n.id === id);
         
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
         showToast('Note saved!');
     };
     
-    window.deleteNote = function(id) {
+    globalThis.deleteNote = function(id) {
         if (confirm('Delete this note?')) {
             let notes = getNotes();
             notes = notes.filter(n => n.id !== id);

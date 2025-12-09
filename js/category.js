@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalTitle = document.getElementById('modalTitle');
     const modalContent = document.getElementById('modalContent');
     const closeBtn = document.querySelector('.close');
-    const toolsContainer = document.querySelector('.tools-grid');
     const themeToggleBtn = document.getElementById('themeToggle');// Theme Toggle functionality
     const currentTheme = localStorage.getItem('theme') || 'dark';
     if (currentTheme === 'light') {
@@ -41,8 +40,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
       // Get category ID from URL path
-    const pathParts = window.location.pathname.split('/');
-    const htmlFilename = pathParts[pathParts.length - 1];
+    const pathParts = globalThis.location.pathname.split('/');
+    const htmlFilename = pathParts.at(-1);
     const categoryId = htmlFilename.replace('.html', '');
     
     // Load tools for the current category
@@ -58,7 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Close tool modal when clicking outside
-        window.addEventListener('click', function(event) {
+        globalThis.addEventListener('click', function(event) {
             if (event.target === toolModal) {
                 toolModal.style.display = 'none';
                 document.body.style.overflow = 'auto'; // Re-enable scrolling
@@ -74,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Close modal when clicking outside
-    window.addEventListener('click', function(event) {
+    globalThis.addEventListener('click', function(event) {
         if (event.target === modal) {
             modal.style.display = 'none';
         }
@@ -86,7 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
         if (searchTerm === '') return;
         
         // Redirect to search results page
-        window.location.href = `../search.html?q=${encodeURIComponent(searchTerm)}`;
+        globalThis.location.href = `../search.html?q=${encodeURIComponent(searchTerm)}`;
     }
       // Function to copy text to clipboard
     function copyToClipboard(text) {
@@ -118,7 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toast.style.opacity = '0';
             toast.style.transition = 'opacity 0.5s ease';
             setTimeout(() => {
-                document.body.removeChild(toast);
+                toast.remove();
             }, 500);
         }, 2000);
     }
@@ -194,20 +193,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     let iconClass = toolIcons.default;
                     if (tool.type && toolIcons[tool.type]) {
                         iconClass = toolIcons[tool.type];
-                    } else {
-                        // Some heuristics based on tool name
-                        if (tool.name.toLowerCase().includes('scan') || tool.name.toLowerCase().includes('recon')) {
-                            iconClass = toolIcons.scanner;
-                        } else if (tool.name.toLowerCase().includes('proxy') || tool.name.toLowerCase().includes('burp')) {
-                            iconClass = toolIcons.proxy;
-                        } else if (tool.name.toLowerCase().includes('sql') || tool.name.toLowerCase().includes('db')) {
-                            iconClass = toolIcons.database;
-                        }
+                    } else if (tool.name.toLowerCase().includes('scan') || tool.name.toLowerCase().includes('recon')) {
+                        iconClass = toolIcons.scanner;
+                    } else if (tool.name.toLowerCase().includes('proxy') || tool.name.toLowerCase().includes('burp')) {
+                        iconClass = toolIcons.proxy;
+                    } else if (tool.name.toLowerCase().includes('sql') || tool.name.toLowerCase().includes('db')) {
+                        iconClass = toolIcons.database;
                     }
                     
                     const toolCard = document.createElement('div');
                     toolCard.className = 'tool-grid-card';
-                    toolCard.setAttribute('data-tool-index', index);
+                    toolCard.dataset.toolIndex = index;
                       toolCard.innerHTML = `
                         <div class="tool-icon">
                             <i class="fas ${iconClass}"></i>
@@ -250,15 +246,12 @@ document.addEventListener('DOMContentLoaded', function() {
             let iconClass = toolIcons.default;
             if (tool.type && toolIcons[tool.type]) {
                 iconClass = toolIcons[tool.type];
-            } else {
-                // Some heuristics based on tool name
-                if (tool.name.toLowerCase().includes('scan') || tool.name.toLowerCase().includes('recon')) {
-                    iconClass = toolIcons.scanner;
-                } else if (tool.name.toLowerCase().includes('proxy') || tool.name.toLowerCase().includes('burp')) {
-                    iconClass = toolIcons.proxy;
-                } else if (tool.name.toLowerCase().includes('sql') || tool.name.toLowerCase().includes('db')) {
-                    iconClass = toolIcons.database;
-                }
+            } else if (tool.name.toLowerCase().includes('scan') || tool.name.toLowerCase().includes('recon')) {
+                iconClass = toolIcons.scanner;
+            } else if (tool.name.toLowerCase().includes('proxy') || tool.name.toLowerCase().includes('burp')) {
+                iconClass = toolIcons.proxy;
+            } else if (tool.name.toLowerCase().includes('sql') || tool.name.toLowerCase().includes('db')) {
+                iconClass = toolIcons.database;
             }
               // Create HTML content for tool modal
             let modalHTML = `
@@ -300,7 +293,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="command-item enhanced">
                             <div class="command-box">
                                 <div class="command-text">${cmd.command}</div>
-                                <button class="copy-icon" title="Copy to clipboard" data-command="${cmd.command.replace(/"/g, '&quot;')}">
+                                <button class="copy-icon" title="Copy to clipboard" data-command="${cmd.command.replaceAll('"', '&quot;')}">
                                     <i class="fas fa-copy"></i>
                                 </button>
                             </div>
@@ -332,7 +325,7 @@ document.addEventListener('DOMContentLoaded', function() {
             copyButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation(); // Prevent event bubbling
-                    const command = this.getAttribute('data-command');
+                    const command = this.dataset.command;
                     copyToClipboard(command);
                 });
             });
@@ -342,11 +335,11 @@ document.addEventListener('DOMContentLoaded', function() {
             copyIcons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation(); // Prevent event bubbling
-                    const command = this.getAttribute('data-command');
+                    const command = this.dataset.command;
                     copyToClipboard(command);
                     
                     // Add to history
-                    if (window.XploitBaseHistory) {
+                    if (globalThis.XploitBaseHistory) {
                         XploitBaseHistory.add(command, tool.name, category.name);
                     }
                 });
@@ -356,9 +349,9 @@ document.addEventListener('DOMContentLoaded', function() {
             learnButtons.forEach(btn => {
                 btn.addEventListener('click', function(e) {
                     e.stopPropagation(); // Prevent event bubbling
-                    const command = this.getAttribute('data-command');
-                    const name = this.getAttribute('data-name');
-                    const desc = this.getAttribute('data-desc');
+                    const command = this.dataset.command;
+                    const name = this.dataset.name;
+                    const desc = this.dataset.desc;
                     
                     // Find the full command object for more details
                     const cmdObj = tool.commands.find(c => c.command === command);

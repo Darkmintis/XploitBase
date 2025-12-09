@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Ctrl/Cmd + H - Go to home
         if ((e.ctrlKey || e.metaKey) && e.key === 'h') {
             e.preventDefault();
-            window.location.href = 'index.html';
+            globalThis.location.href = 'index.html';
         }
         
         // Ctrl/Cmd + / - Show shortcuts help
@@ -342,6 +342,6 @@ function showToast(message, duration = 3000) {
     
     setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => document.body.removeChild(toast), 500);
+        setTimeout(() => toast.remove(), 500);
     }, duration);
 }
