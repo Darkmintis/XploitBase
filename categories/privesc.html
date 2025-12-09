@@ -1,0 +1,106 @@
+<!-- filepath: D:\MyBrain\Projects\Darkmintis\XploitBase\categories\privesc.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privilege Escalation - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/command-enhancements.css">`n    <link rel="stylesheet" href="../css/enhanced-features.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="../images/favicon.svg" type="image/svg+xml">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>🛠️ XploitBase</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search tools and commands...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> Back to Categories</a>
+            
+            <h2 class="category-title">Privilege Escalation Tools</h2>
+            
+            <section class="tools-grid">
+                <!-- Tools will be loaded dynamically via JS -->
+            </section>
+        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase - For educational purposes only</p>
+            <div class="footer-links">
+                <a href="../help.html">Help</a>
+                <a href="https://github.com/yourusername/xploitbase" target="_blank" rel="noopener">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for learn details -->
+    <div id="learnModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Command Details</h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>
+    
+    <!-- Modal for tool details -->
+    <div id="toolModal" class="tool-modal">
+        <div class="tool-modal-content">
+            <span class="tool-modal-close">&times;</span>
+            <div id="toolModalContent"></div>
+        </div>
+    </div>
+
+        
+    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab-main" id="fabMain" title="Quick Actions">
+            <i class="fas fa-rocket"></i>
+        </button>
+        <div class="fab-menu" id="fabMenu">
+            <button class="fab-item" onclick="showCheatSheet()" title="Quick Cheat Sheet (Ctrl+Q)">
+                <i class="fas fa-book-open"></i>
+            </button>
+            <button class="fab-item" onclick="toggleFavoritesPanel()" title="Favorites & History (Ctrl+F)">
+                <i class="fas fa-star"></i>
+            </button>
+            <button class="fab-item" onclick="toggleNotesPanel()" title="Notes (Ctrl+N)">
+                <i class="fas fa-sticky-note"></i>
+            </button>
+            <button class="fab-item" onclick="toggleTimerPanel()" title="CTF Timer (Ctrl+T)">
+                <i class="fas fa-stopwatch"></i>
+            </button>
+            <button class="fab-item" onclick="showShortcutsModal()" title="Shortcuts (Ctrl+/)">
+                <i class="fas fa-keyboard"></i>
+            </button>
+        </div>
+    </div>
+
+    <script<script src="../js/data.js"></script>`n    <script src="../js/shortcuts.js"></script>`n    <script src="../js/favorites.js"></script>`n    <script src="../js/timer.js"></script>`n    <script src="../js/notes.js"></script>
+    <script src="../js/category.js"></script>
+</body>
+</html>
+
+
+
+
+
+

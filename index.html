@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XploitBase - Your Ultimate CTF Companion</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/command-enhancements.css">
+    <link rel="stylesheet" href="css/enhanced-features.css">
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.svg" type="image/svg+xml">
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#667eea">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="XploitBase">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <h1>🛠️ XploitBase</h1>
+            </div>
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="Search tools and commands...">
+                <button id="searchBtn" title="Search"><i class="fas fa-search"></i></button>
+            </div>            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <section class="intro">
+                <h2>Your Ultimate CTF Companion</h2>
+                <p>A minimal yet powerful tool reference for CTF competitions. Select a category below to start:</p>
+            </section>            <section class="categories">                <div class="grid">
+                    <a href="categories/web.html" class="category-card">
+                        <i class="fas fa-globe"></i>
+                        <h3>Web</h3>
+                    </a>
+                    <a href="categories/reverse.html" class="category-card">
+                        <i class="fas fa-undo"></i>
+                        <h3>Reverse Engineering</h3>
+                    </a>
+                    <a href="categories/binary.html" class="category-card">
+                        <i class="fas fa-microchip"></i>
+                        <h3>Binary Exploitation</h3>
+                    </a>
+                    <a href="categories/crypto.html" class="category-card">
+                        <i class="fas fa-key"></i>
+                        <h3>Cryptography</h3>
+                    </a>
+                    <a href="categories/forensics.html" class="category-card">
+                        <i class="fas fa-search"></i>
+                        <h3>Forensics</h3>
+                    </a>
+                    <a href="categories/osint.html" class="category-card">
+                        <i class="fas fa-eye"></i>
+                        <h3>OSINT</h3>
+                    </a>
+                    <a href="categories/stego.html" class="category-card">
+                        <i class="fas fa-image"></i>
+                        <h3>Steganography</h3>
+                    </a>
+                    <a href="categories/mobile.html" class="category-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h3>Mobile</h3>
+                    </a>
+                    <a href="categories/network.html" class="category-card">
+                        <i class="fas fa-network-wired"></i>
+                        <h3>Networking</h3>
+                    </a>
+                    <a href="categories/misc.html" class="category-card">
+                        <i class="fas fa-ellipsis-h"></i>
+                        <h3>Miscellaneous</h3>
+                    </a>
+                    <a href="categories/idor.html" class="category-card">
+                        <i class="fas fa-user-shield"></i>
+                        <h3>IDOR & Auth</h3>
+                    </a>                    <a href="categories/privesc.html" class="category-card">
+                        <i class="fas fa-angle-double-up"></i>
+                        <h3>Privilege Escalation</h3>
+                    </a>
+                    <a href="categories/activedir.html" class="category-card">
+                        <i class="fas fa-sitemap"></i>
+                        <h3>Active Directory</h3>
+                    </a>
+                    <a href="categories/system.html" class="category-card">
+                        <i class="fas fa-server"></i>
+                        <h3>System Exploitation</h3>
+                    </a>
+                    <a href="categories/malware.html" class="category-card">
+                        <i class="fas fa-bug"></i>
+                        <h3>Malware Analysis</h3>
+                    </a>
+                    <a href="categories/realworld.html" class="category-card">
+                        <i class="fas fa-skull-crossbones"></i>
+                        <h3>Real World / Full Pwn</h3>
+                    </a>
+                </div>
+            </section>
+
+            <section class="about">
+                <h2>About XploitBase</h2>
+                <p>XploitBase helps solo players or teams quickly select a CTF category, view relevant tools, and explore useful commands—all in one aesthetic and efficient interface.</p>
+                <div class="features">
+                    <div class="feature">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Fast Access</h4>
+                        <p>Every command is accessible within 2 clicks max</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-book"></i>
+                        <h4>Learn Mode</h4>
+                        <p>Understand tools and commands with simple explanations</p>
+                    </div>
+                    <div class="feature">
+                        <i class="fas fa-copy"></i>
+                        <h4>Quick Copy</h4>
+                        <p>Copy commands instantly to your clipboard</p>
+                    </div>
+                </div>
+            </section>        </div>
+    </main>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase - For educational purposes only</p>
+            <div class="footer-links">
+                <a href="help.html">Help</a>
+                <a href="https://github.com/yourusername/xploitbase" target="_blank" rel="noopener">GitHub</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for learn details -->
+    <div id="learnModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalTitle">Command Details</h2>
+            <div id="modalContent"></div>
+        </div>
+    </div>    <!-- Floating Action Button -->
+    <div class="fab-container">
+        <button class="fab-main" id="fabMain" title="Quick Actions">
+            <i class="fas fa-rocket"></i>
+        </button>
+        <div class="fab-menu" id="fabMenu">
+            <button class="fab-item" onclick="showCheatSheet()" title="Quick Cheat Sheet (Ctrl+Q)">
+                <i class="fas fa-book-open"></i>
+            </button>
+            <button class="fab-item" onclick="toggleFavoritesPanel()" title="Favorites & History (Ctrl+F)">
+                <i class="fas fa-star"></i>
+            </button>
+            <button class="fab-item" onclick="toggleNotesPanel()" title="Notes (Ctrl+N)">
+                <i class="fas fa-sticky-note"></i>
+            </button>
+            <button class="fab-item" onclick="toggleTimerPanel()" title="CTF Timer (Ctrl+T)">
+                <i class="fas fa-stopwatch"></i>
+            </button>
+            <button class="fab-item" onclick="showShortcutsModal()" title="Shortcuts (Ctrl+/)">
+                <i class="fas fa-keyboard"></i>
+            </button>
+        </div>
+    </div>
+
+    <script src="js/data.js"></script>
+    <script src="js/shortcuts.js"></script>
+    <script src="js/favorites.js"></script>
+    <script src="js/timer.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

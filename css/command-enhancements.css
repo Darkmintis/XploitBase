@@ -1,0 +1,99 @@
+/* Enhanced Command UI Styles */
+.command-item.enhanced {
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.command-box {
+    display: flex;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border-radius: 6px;
+    padding: 5px;
+    margin-bottom: 10px;
+    position: relative;
+    align-items: center;
+    border-left: 3px solid var(--accent-color);
+    gap: 8px;
+}
+
+.enhanced .command-text {
+    background-color: transparent;
+    border-left: none;
+    width: calc(100% - 40px);
+    margin: 0;
+    padding: 8px 5px;
+}
+
+.copy-icon {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: color 0.2s;
+    padding: 5px 10px;
+}
+
+.copy-icon:hover {
+    color: var(--accent-color);
+}
+
+.command-info-box {
+    width: 100%;
+    background-color: var(--bg-primary);
+    border-radius: 6px;
+    padding: 10px;
+    margin-top: 5px;
+    position: relative;
+    border-left: 3px solid var(--text-secondary);
+}
+
+.learn-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 1.1rem;
+    transition: color 0.2s;
+}
+
+.learn-icon:hover {
+    color: var(--accent-color);
+}
+
+.learn-icon .learn-tooltip {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 30px;
+    width: 300px;
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    z-index: 100;
+}
+
+.learn-icon:hover .learn-tooltip {
+    display: block;
+}
+
+.learn-tooltip h4 {
+    margin-top: 0;
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 8px;
+    margin-bottom: 10px;
+}
+
+.learn-tooltip ul {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.learn-tooltip li {
+    margin-bottom: 8px;
+}
