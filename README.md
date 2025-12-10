@@ -1,6 +1,6 @@
-# 🛠️ XploitBase - Your Ultimate CTF Companion
+# XploitBase - Your Ultimate CTF Companion
 
-XploitBase is a comprehensive, feature-rich web application designed specifically for CTF (Capture The Flag) players. It provides quick access to essential hacking tools, commands, and resources, all in one aesthetically pleasing and efficient interface.
+XploitBase is a **self-contained, offline-ready toolkit** for CTF players. In the AI-driven world, XploitBase provides everything you need—standard tools, commands, and techniques—without external dependencies. Just open it and start solving challenges.
 
 ## ✨ Features
 
@@ -98,8 +98,8 @@ XploitBase/
 
 1. **Clone or download** this repository:
    ```bash
-   git clone https://github.com/yourusername/xploitbase.git
-   cd xploitbase
+   git clone https://github.com/Darkmintis/XploitBase.git
+   cd XploitBase
    ```
 
 2. **Open in browser**:
@@ -257,10 +257,11 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - CTF community for tool suggestions
 - All contributors and users
 
-## 📧 Contact
+## Contact
 
-- **GitHub**: [yourusername](https://github.com/yourusername)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/xploitbase/issues)
+- **GitHub**: [Darkmintis](https://github.com/Darkmintis)
+- **Website**: [darkmintis.dev](https://darkmintis.dev)
+- **Issues**: [GitHub Issues](https://github.com/Darkmintis/XploitBase/issues)
 
 ## 🔄 Changelog
 
