@@ -781,3 +781,96 @@
         grid-template-columns: 1fr;
     }
 }
+
+/* Light Theme Overrides for Features */
+.light-theme .side-panel {
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .panel-header {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+}
+
+.light-theme .shortcut-item {
+    background-color: #f8fafc;
+}
+
+.light-theme .shortcut-item kbd {
+    background-color: #ffffff;
+    box-shadow: 0 2px 0 #cbd5e1;
+}
+
+.light-theme .panel-tab.active {
+    background-color: #f8fafc;
+}
+
+.light-theme .favorite-item,
+.light-theme .history-item {
+    background-color: #f8fafc;
+}
+
+.light-theme .favorite-item:hover,
+.light-theme .history-item:hover {
+    background-color: #e0f2fe;
+}
+
+.light-theme .timer-display {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+}
+
+.light-theme .timer-btn.primary {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+}
+
+.light-theme .timer-btn.danger {
+    background: linear-gradient(135deg, #ef4444, #f97316);
+}
+
+.light-theme .task-item {
+    background-color: #f8fafc;
+}
+
+.light-theme .task-item.completed {
+    background-color: #f0fdf4;
+}
+
+.light-theme #notesTextarea {
+    background-color: #f8fafc;
+}
+
+.light-theme .notes-btn.primary {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.light-theme .cheat-item {
+    background-color: #f8fafc;
+}
+
+.light-theme .cheat-item code {
+    background-color: #f1f5f9;
+}
+
+.light-theme .fab-main {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+    border: none;
+    color: #ffffff;
+    box-shadow: 0 4px 20px rgba(59, 130, 246, 0.4);
+}
+
+.light-theme .fab-main:hover {
+    box-shadow: 0 6px 25px rgba(59, 130, 246, 0.5);
+}
+
+.light-theme .fab-item {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.light-theme .fab-item:hover {
+    background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+}
+
+.light-theme .toast {
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
