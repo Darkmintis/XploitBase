@@ -37,10 +37,37 @@
 
     <main>
         <div class="container">
-            <section class="intro">
-                <h2>Your Ultimate CTF Companion</h2>
-                <p>A minimal yet powerful tool reference for CTF competitions. Select a category below to start:</p>
-            </section>            <section class="categories">                <div class="grid">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">🛡️ XploitBase</h1>
+                    <p class="hero-subtitle">Your Ultimate CTF Companion & Security Toolkit</p>
+                    <p class="hero-description">A comprehensive collection of tools, commands, and resources for CTF competitions, penetration testing, and security research. Everything you need, one click away.</p>
+                    <div class="hero-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">16</span>
+                            <span class="stat-label">Categories</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">100+</span>
+                            <span class="stat-label">Tools</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">500+</span>
+                            <span class="stat-label">Commands</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">PWA</span>
+                            <span class="stat-label">Offline Ready</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTF Categories Section -->
+            <section class="categories">
+                <h2 class="section-title">🎯 CTF Categories</h2>
+                <div class="grid">
                     <a href="categories/web.html" class="category-card">
                         <i class="fas fa-globe"></i>
                         <h3>Web</h3>
@@ -107,8 +134,48 @@
                 </div>
             </section>
 
+            <!-- Online Tools Section -->
+            <section class="online-tools">
+                <h2 class="section-title">🌐 Online Tools</h2>
+                <p class="section-description">Powerful web-based tools integrated with XploitBase for instant access</p>
+                <div class="tools-grid">
+                    <a href="https://darkmintis.dev/hashcrack/" target="_blank" rel="noopener noreferrer" class="tool-card external-tool">
+                        <div class="tool-icon">
+                            <i class="fas fa-unlock-alt"></i>
+                        </div>
+                        <h3>Hash Cracker</h3>
+                        <p>Crack password hashes using multiple algorithms and wordlists</p>
+                        <span class="external-badge"><i class="fas fa-external-link-alt"></i> Open Tool</span>
+                    </a>
+                    <a href="https://darkmintis.dev/hashgenerator/" target="_blank" rel="noopener noreferrer" class="tool-card external-tool">
+                        <div class="tool-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <h3>Hash Generator</h3>
+                        <p>Generate cryptographic hashes for multiple algorithms instantly</p>
+                        <span class="external-badge"><i class="fas fa-external-link-alt"></i> Open Tool</span>
+                    </a>
+                    <a href="https://gchq.github.io/CyberChef/" target="_blank" rel="noopener noreferrer" class="tool-card external-tool">
+                        <div class="tool-icon">
+                            <i class="fas fa-blender"></i>
+                        </div>
+                        <h3>CyberChef</h3>
+                        <p>The Cyber Swiss Army Knife for data manipulation and analysis</p>
+                        <span class="external-badge"><i class="fas fa-external-link-alt"></i> Open Tool</span>
+                    </a>
+                    <a href="https://crackstation.net/" target="_blank" rel="noopener noreferrer" class="tool-card external-tool">
+                        <div class="tool-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>CrackStation</h3>
+                        <p>Online hash lookup database with billions of hashes</p>
+                        <span class="external-badge"><i class="fas fa-external-link-alt"></i> Open Tool</span>
+                    </a>
+                </div>
+            </section>
+
             <section class="about">
-                <h2>About XploitBase</h2>
+                <h2 class="section-title">📖 About XploitBase</h2>
                 <p>XploitBase helps solo players or teams quickly select a CTF category, view relevant tools, and explore useful commands—all in one aesthetic and efficient interface.</p>
                 <div class="features">
                     <div class="feature">
@@ -132,10 +199,33 @@
     
     <footer>
         <div class="container">
-            <p>&copy; 2025 XploitBase - For educational purposes only</p>
-            <div class="footer-links">
-                <a href="help.html">Help</a>
-                <a href="https://github.com/yourusername/xploitbase" target="_blank" rel="noopener">GitHub</a>
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>🛠️ XploitBase</h3>
+                    <p>Your Ultimate CTF Companion</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-section">
+                        <h4>Resources</h4>
+                        <a href="help.html">Help & Guide</a>
+                        <a href="search.html">Search Tools</a>
+                        <a href="https://darkmintis.dev" target="_blank" rel="noopener">Darkmintis.dev</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Tools</h4>
+                        <a href="https://darkmintis.dev/hashcrack/" target="_blank" rel="noopener">Hash Cracker</a>
+                        <a href="https://darkmintis.dev/hashgenerator/" target="_blank" rel="noopener">Hash Generator</a>
+                    </div>
+                    <div class="footer-section">
+                        <h4>Connect</h4>
+                        <a href="https://github.com/Darkmintis/XploitBase" target="_blank" rel="noopener"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="https://github.com/Darkmintis" target="_blank" rel="noopener"><i class="fab fa-github"></i> @Darkmintis</a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 XploitBase by Darkmintis. For educational purposes only.</p>
+                <p class="footer-disclaimer">⚠️ Use responsibly and ethically. Always obtain proper authorization.</p>
             </div>
         </div>
     </footer>
