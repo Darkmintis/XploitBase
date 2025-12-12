@@ -79,10 +79,6 @@
     background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
 }
 
-.light-theme .fab-main {
-    box-shadow: 0 4px 15px var(--shadow-accent);
-}
-
 .light-theme .external-badge {
     background-color: var(--accent-color);
     color: #ffffff;

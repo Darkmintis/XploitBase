@@ -208,7 +208,6 @@ document.addEventListener('DOMContentLoaded', function() {
                         <div class="tool-icon">
                             <i class="fas ${iconClass}"></i>
                         </div>
-                        ${tool.toolType ? `<div class="tool-type-badge">${tool.toolType}</div>` : ''}
                         <h3>${tool.name}</h3>
                         <div class="description">${tool.description}</div>
                     `;
@@ -258,7 +257,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="tool-modal-header">
                     <div class="tool-modal-icon"><i class="fas ${iconClass}"></i></div>
                     <h2 class="tool-modal-title">${tool.name}</h2>
-                    ${tool.toolType ? `<div class="tool-type-badge">${tool.toolType}</div>` : ''}
                 </div>
                 <div class="tool-modal-description">${tool.description}</div>
             `;
