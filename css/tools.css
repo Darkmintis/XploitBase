@@ -36,6 +36,48 @@
     line-height: 1.6;
 }
 
+/* Tabs */
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 30px;
+    border-bottom: 2px solid var(--border-color);
+}
+
+.tab-btn {
+    padding: 12px 24px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--text-secondary);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-btn:hover {
+    color: var(--text-primary);
+    background-color: rgba(59, 130, 246, 0.05);
+}
+
+.tab-btn.active {
+    color: var(--accent-color);
+    border-bottom-color: var(--accent-color);
+}
+
+.tab-btn i {
+    margin-right: 8px;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 /* Converter Section */
 .converter-section {
     max-width: 900px;
@@ -143,13 +185,16 @@
     border-color: var(--accent-color);
 }
 
-/* Convert Button */
-.convert-button-container {
-    text-align: center;
+/* Action Buttons */
+.convert-button-container, .action-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
     margin: 30px 0;
 }
 
-.convert-btn {
+.convert-btn, .action-btn {
     padding: 16px 48px;
     font-size: 1.1rem;
     font-weight: 600;
@@ -162,13 +207,48 @@
     box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
 }
 
-.convert-btn:hover {
+.convert-btn:hover, .action-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
 }
 
-.convert-btn i {
+.convert-btn i, .action-btn i {
     margin-right: 8px;
+}
+
+.clear-btn {
+    padding: 16px 32px;
+    font-size: 1rem;
+    font-weight: 600;
+    background-color: var(--card-bg);
+    color: var(--text-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.clear-btn:hover {
+    border-color: #ef4444;
+    color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.1);
+}
+
+.copy-output-btn {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.copy-output-btn:hover {
+    background-color: var(--accent-secondary);
+    transform: scale(1.05);
 }
 
 /* Output Section */
@@ -358,6 +438,73 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 25px;
+}
+
+.tips-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tip-item {
+    display: flex;
+    gap: 15px;
+    align-items: flex-start;
+    padding: 20px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.tip-item i {
+    color: var(--accent-color);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.tip-item strong {
+    color: var(--text-primary);
+}
+
+.use-cases-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.use-case {
+    text-align: center;
+    padding: 25px;
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+.use-case:hover {
+    border-color: var(--accent-color);
+    transform: translateY(-2px);
+}
+
+.use-case i {
+    font-size: 2.5rem;
+    color: var(--accent-color);
+    margin-bottom: 15px;
+}
+
+.use-case h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 10px;
+}
+
+.use-case p {
+    color: var(--text-secondary);
+    line-height: 1.5;
 }
 
 .tip-card {

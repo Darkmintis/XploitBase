@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base64 Tool - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+
+            <section class="tool-hero">
+                <div class="tool-icon-large">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h1 class="tool-title">Base64 Encoder/Decoder</h1>
+                <p class="tool-description">Fast Base64 encoding and decoding with instant results. Essential for CTF challenges and API testing.</p>
+            </section>
+
+            <section class="converter-section">
+                <div class="tabs">
+                    <button class="tab-btn active" data-tab="encode">
+                        <i class="fas fa-lock"></i> Encode
+                    </button>
+                    <button class="tab-btn" data-tab="decode">
+                        <i class="fas fa-unlock"></i> Decode
+                    </button>
+                </div>
+
+                <div class="tab-content active" id="encode">
+                    <div class="input-section">
+                        <label for="encodeInput">
+                            <i class="fas fa-keyboard"></i> Input Text
+                        </label>
+                        <textarea id="encodeInput" placeholder="Enter text to encode..." rows="6"></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="encodeBtn" class="action-btn">
+                            <i class="fas fa-arrow-right"></i> Encode to Base64
+                        </button>
+                        <button id="clearEncodeBtn" class="clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="output-section">
+                        <label for="encodeOutput">
+                            <i class="fas fa-terminal"></i> Base64 Output
+                        </label>
+                        <textarea id="encodeOutput" placeholder="Encoded result will appear here..." rows="6" readonly></textarea>
+                        <button id="copyEncodeBtn" class="copy-output-btn">
+                            <i class="fas fa-copy"></i> Copy Output
+                        </button>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="decode">
+                    <div class="input-section">
+                        <label for="decodeInput">
+                            <i class="fas fa-keyboard"></i> Base64 Input
+                        </label>
+                        <textarea id="decodeInput" placeholder="Enter Base64 to decode..." rows="6"></textarea>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="decodeBtn" class="action-btn">
+                            <i class="fas fa-arrow-right"></i> Decode from Base64
+                        </button>
+                        <button id="clearDecodeBtn" class="clear-btn">
+                            <i class="fas fa-times"></i> Clear
+                        </button>
+                    </div>
+
+                    <div class="output-section">
+                        <label for="decodeOutput">
+                            <i class="fas fa-terminal"></i> Decoded Output
+                        </label>
+                        <textarea id="decodeOutput" placeholder="Decoded result will appear here..." rows="6" readonly></textarea>
+                        <button id="copyDecodeBtn" class="copy-output-btn">
+                            <i class="fas fa-copy"></i> Copy Output
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="examples-section">
+                <h2><i class="fas fa-book"></i> Common Uses</h2>
+                <div class="use-cases-grid">
+                    <div class="use-case">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>CTF Challenges</h4>
+                        <p>Decode Base64-encoded flags and hints</p>
+                    </div>
+                    <div class="use-case">
+                        <i class="fas fa-code"></i>
+                        <h4>API Testing</h4>
+                        <p>Encode credentials for Basic Auth</p>
+                    </div>
+                    <div class="use-case">
+                        <i class="fas fa-file-code"></i>
+                        <h4>Data Transfer</h4>
+                        <p>Encode binary data for text protocols</p>
+                    </div>
+                    <div class="use-case">
+                        <i class="fas fa-search"></i>
+                        <h4>Forensics</h4>
+                        <p>Analyze encoded strings in logs</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tips-section">
+                <h2><i class="fas fa-info-circle"></i> Quick Tips</h2>
+                <div class="tips-list">
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Padding:</strong> Base64 strings should end with = or == for proper padding
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Multiple Encoding:</strong> Data can be encoded multiple times - try decoding repeatedly
+                        </div>
+                    </div>
+                    <div class="tip-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Binary Data:</strong> Base64 is commonly used to encode images and files in text format
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer">⚠️ For educational and authorized testing only</p>
+        </div>
+    </footer>
+
+    <script src="../js/base64-tool.js"></script>
+    <script>
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            if (document.body.classList.contains('light-theme')) {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+    </script>
+</body>
+</html>
