@@ -38,7 +38,12 @@ jobs:
           
           # Copy category pages
           cp -r categories main-repo/dist/xploitbase/
-          cp sw.js main-repo/dist/xploitbase/
+          
+          # Copy tools pages
+          cp -r tools main-repo/dist/xploitbase/
+          
+          # Copy service worker if exists
+          [ -f sw.js ] && cp sw.js main-repo/dist/xploitbase/ || true
           
           # Copy documentation
           cp LICENSE main-repo/dist/xploitbase/

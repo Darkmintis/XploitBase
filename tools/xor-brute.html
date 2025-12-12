@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XOR Brute Force - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="minimal-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="tool-hero">
+                <div class="tool-icon"><i class="fas fa-key"></i></div>
+                <h1>XOR Brute Force</h1>
+                <p>Try all possible XOR keys (1-255) to decrypt data instantly</p>
+            </div>
+
+            <div class="tool-content">
+                <!-- Input Format Selection -->
+                <div class="format-selector">
+                    <h3><i class="fas fa-arrow-down"></i> Input Format</h3>
+                    <div class="format-grid">
+                        <button class="format-btn active" data-format="text" onclick="setInputFormat('text')">
+                            <i class="fas fa-font"></i> Text
+                        </button>
+                        <button class="format-btn" data-format="hex" onclick="setInputFormat('hex')">
+                            <i class="fas fa-hashtag"></i> Hex
+                        </button>
+                        <button class="format-btn" data-format="base64" onclick="setInputFormat('base64')">
+                            <i class="fas fa-cube"></i> Base64
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="tool-section">
+                    <h2><i class="fas fa-keyboard"></i> Encrypted Data</h2>
+                    <textarea id="inputText" rows="6" placeholder="Enter encrypted text or data..."></textarea>
+                </div>
+
+                <!-- Options -->
+                <div class="tool-section">
+                    <h2><i class="fas fa-cog"></i> Options</h2>
+                    <div class="input-options">
+                        <label class="option-label">
+                            <input type="checkbox" id="showPrintable" checked>
+                            <span>Show only printable results</span>
+                        </label>
+                        <label class="option-label">
+                            <input type="checkbox" id="highlightEnglish" checked>
+                            <span>Highlight likely English text</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="tool-actions">
+                    <button onclick="bruteForce()" class="btn-primary">
+                        <i class="fas fa-unlock-alt"></i> Brute Force (All 255 Keys)
+                    </button>
+                    <button onclick="clearAll()" class="btn-secondary">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+
+                <!-- Results Section -->
+                <div class="tool-section" id="resultsSection" style="display: none;">
+                    <h2><i class="fas fa-list"></i> Results (<span id="resultCount">0</span> keys)</h2>
+                    <div class="xor-results" id="resultsContainer"></div>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="tool-section">
+                    <h2><i class="fas fa-lightbulb"></i> XOR Cipher Tips</h2>
+                    <ul class="tips-list">
+                        <li><i class="fas fa-check"></i> XOR with single byte key is common in CTF challenges</li>
+                        <li><i class="fas fa-check"></i> Look for readable ASCII text in results</li>
+                        <li><i class="fas fa-check"></i> English text detection highlights likely keys</li>
+                        <li><i class="fas fa-check"></i> Keys 32-126 produce printable ASCII</li>
+                        <li><i class="fas fa-check"></i> Click any result to copy it</li>
+                        <li><i class="fas fa-check"></i> Try hex input if text doesn't work</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer"><i class="fas fa-exclamation-triangle"></i> For educational and authorized testing only</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/xor-brute.js"></script>
+</body>
+</html>

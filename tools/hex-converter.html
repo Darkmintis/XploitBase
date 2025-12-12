@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hex/Binary Converter - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="minimal-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="tool-hero">
+                <div class="tool-icon"><i class="fas fa-exchange-alt"></i></div>
+                <h1>Hex/Binary Converter</h1>
+                <p>Convert between Text, Hexadecimal, Binary, Decimal, and Octal</p>
+            </div>
+
+            <div class="tool-content">
+                <!-- Input Format Selection -->
+                <div class="format-selector">
+                    <h3><i class="fas fa-arrow-down"></i> Input Format</h3>
+                    <div class="format-grid">
+                        <button class="format-btn active" data-format="text" onclick="setInputFormat('text')">
+                            <i class="fas fa-font"></i> Text
+                        </button>
+                        <button class="format-btn" data-format="hex" onclick="setInputFormat('hex')">
+                            <i class="fas fa-hashtag"></i> Hex
+                        </button>
+                        <button class="format-btn" data-format="binary" onclick="setInputFormat('binary')">
+                            <i class="fas fa-binary"></i> Binary
+                        </button>
+                        <button class="format-btn" data-format="decimal" onclick="setInputFormat('decimal')">
+                            <i class="fas fa-sort-numeric-up"></i> Decimal
+                        </button>
+                        <button class="format-btn" data-format="octal" onclick="setInputFormat('octal')">
+                            <i class="fas fa-circle"></i> Octal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Input Section -->
+                <div class="tool-section">
+                    <h2><i class="fas fa-keyboard"></i> Input</h2>
+                    <textarea id="inputText" rows="6" placeholder="Enter text or data to convert...">Hello CTF</textarea>
+                </div>
+
+                <div class="conversion-direction">
+                    <i class="fas fa-arrows-alt-v"></i>
+                </div>
+
+                <!-- Output Format Selection -->
+                <div class="format-selector">
+                    <h3><i class="fas fa-arrow-up"></i> Output Formats</h3>
+                    <div class="format-grid">
+                        <label class="format-checkbox">
+                            <input type="checkbox" id="outText" checked onchange="convert()">
+                            <span><i class="fas fa-font"></i> Text</span>
+                        </label>
+                        <label class="format-checkbox">
+                            <input type="checkbox" id="outHex" checked onchange="convert()">
+                            <span><i class="fas fa-hashtag"></i> Hex</span>
+                        </label>
+                        <label class="format-checkbox">
+                            <input type="checkbox" id="outBinary" checked onchange="convert()">
+                            <span><i class="fas fa-binary"></i> Binary</span>
+                        </label>
+                        <label class="format-checkbox">
+                            <input type="checkbox" id="outDecimal" onchange="convert()">
+                            <span><i class="fas fa-sort-numeric-up"></i> Decimal</span>
+                        </label>
+                        <label class="format-checkbox">
+                            <input type="checkbox" id="outOctal" onchange="convert()">
+                            <span><i class="fas fa-circle"></i> Octal</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="tool-actions">
+                    <button onclick="convert()" class="btn-primary">
+                        <i class="fas fa-sync"></i> Convert
+                    </button>
+                    <button onclick="clearAll()" class="btn-secondary">
+                        <i class="fas fa-eraser"></i> Clear
+                    </button>
+                </div>
+
+                <!-- Output Section -->
+                <div class="tool-section" id="outputSection" style="display: none;">
+                    <h2><i class="fas fa-file-code"></i> Results</h2>
+                    <div id="outputContainer"></div>
+                </div>
+
+                <!-- Quick Tips -->
+                <div class="tool-section">
+                    <h2><i class="fas fa-lightbulb"></i> Format Examples</h2>
+                    <div class="examples-grid">
+                        <div class="example-card">
+                            <h3><i class="fas fa-font"></i> Text</h3>
+                            <code>Hello</code>
+                        </div>
+                        <div class="example-card">
+                            <h3><i class="fas fa-hashtag"></i> Hex</h3>
+                            <code>48656c6c6f</code>
+                        </div>
+                        <div class="example-card">
+                            <h3><i class="fas fa-binary"></i> Binary</h3>
+                            <code>01001000 01100101 01101100 01101100 01101111</code>
+                        </div>
+                        <div class="example-card">
+                            <h3><i class="fas fa-sort-numeric-up"></i> Decimal</h3>
+                            <code>72 101 108 108 111</code>
+                        </div>
+                        <div class="example-card">
+                            <h3><i class="fas fa-circle"></i> Octal</h3>
+                            <code>110 145 154 154 157</code>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer"><i class="fas fa-exclamation-triangle"></i> For educational and authorized testing only</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/hex-converter.js"></script>
+</body>
+</html>
