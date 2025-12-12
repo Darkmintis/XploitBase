@@ -1,18 +1,5 @@
 // Main JavaScript for XploitBase
 
-// Register Service Worker for offline support
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js')
-            .then(registration => {
-                console.log('XploitBase: Service Worker registered successfully:', registration.scope);
-            })
-            .catch(error => {
-                console.log('XploitBase: Service Worker registration failed:', error);
-            });
-    });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     const searchInput = document.getElementById('searchInput');
     const searchBtn = document.getElementById('searchBtn');
