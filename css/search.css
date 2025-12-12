@@ -403,6 +403,35 @@
     font-size: 0.9rem;
 }
 
+.new-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, #ef4444, #f97316);
+    color: white;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 0.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.tool-card-home.featured {
+    border: 2px solid var(--primary-color);
+    box-shadow: 0 8px 25px rgba(59, 130, 246, 0.2);
+}
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     .search-title {

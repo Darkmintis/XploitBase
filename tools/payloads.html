@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payload Library - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="../css/payloads.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header class="minimal-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="tool-hero">
+                <div class="tool-icon"><i class="fas fa-bomb"></i></div>
+                <h1>Payload Library</h1>
+                <p>1000+ ready-to-use payloads for CTF challenges and penetration testing</p>
+            </div>
+
+            <!-- Search and Filter -->
+            <div class="payload-controls">
+                <div class="payload-search">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="payloadSearch" placeholder="Search payloads...">
+                </div>
+                
+                <div class="payload-filters">
+                    <button class="filter-btn active" data-category="all">
+                        <i class="fas fa-th"></i> All
+                    </button>
+                    <button class="filter-btn" data-category="xss">
+                        <i class="fas fa-code"></i> XSS
+                    </button>
+                    <button class="filter-btn" data-category="sqli">
+                        <i class="fas fa-database"></i> SQLi
+                    </button>
+                    <button class="filter-btn" data-category="ssti">
+                        <i class="fas fa-brackets-curly"></i> SSTI
+                    </button>
+                    <button class="filter-btn" data-category="lfi">
+                        <i class="fas fa-file"></i> LFI/RFI
+                    </button>
+                    <button class="filter-btn" data-category="cmdi">
+                        <i class="fas fa-terminal"></i> Command Injection
+                    </button>
+                    <button class="filter-btn" data-category="xxe">
+                        <i class="fas fa-file-code"></i> XXE
+                    </button>
+                    <button class="filter-btn" data-category="ssrf">
+                        <i class="fas fa-server"></i> SSRF
+                    </button>
+                    <button class="filter-btn" data-category="bypass">
+                        <i class="fas fa-shield-alt"></i> WAF Bypass
+                    </button>
+                </div>
+            </div>
+
+            <!-- Payload Results Count -->
+            <div class="payload-stats">
+                <span id="payloadCount">Loading payloads...</span>
+            </div>
+
+            <!-- Payloads Grid -->
+            <div class="payloads-grid" id="payloadsGrid">
+                <!-- Payloads will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer"><i class="fas fa-exclamation-triangle"></i> For educational and authorized testing only</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/payload-data.js"></script>
+    <script src="../js/payloads.js"></script>
+</body>
+</html>
