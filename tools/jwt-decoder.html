@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JWT Decoder - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">XploitBase</a>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tool-hero">
+            <div class="tool-icon">🔑</div>
+            <h1>JWT Decoder</h1>
+            <p>Decode, analyze, and manipulate JSON Web Tokens for CTF challenges and security testing</p>
+        </div>
+
+        <div class="input-section">
+            <label for="jwt-input">
+                <strong>JWT Token</strong>
+                <span class="label-hint">Paste your JWT token (eyJ...)</span>
+            </label>
+            <textarea id="jwt-input" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c" rows="4"></textarea>
+        </div>
+
+        <div class="action-buttons">
+            <button class="btn-primary" onclick="decodeJWT()">
+                <span>🔓</span> Decode JWT
+            </button>
+            <button class="btn-secondary" onclick="clearAll()">Clear</button>
+        </div>
+
+        <div class="jwt-output-container" id="output-container" style="display: none;">
+            <div class="jwt-section">
+                <div class="jwt-section-header">
+                    <h3>🎨 Header</h3>
+                    <button class="btn-copy-small" onclick="copySection('header')">Copy</button>
+                </div>
+                <pre id="jwt-header" class="jwt-output"></pre>
+            </div>
+
+            <div class="jwt-section">
+                <div class="jwt-section-header">
+                    <h3>📦 Payload</h3>
+                    <button class="btn-copy-small" onclick="copySection('payload')">Copy</button>
+                </div>
+                <pre id="jwt-payload" class="jwt-output"></pre>
+            </div>
+
+            <div class="jwt-section">
+                <div class="jwt-section-header">
+                    <h3>✍️ Signature</h3>
+                    <button class="btn-copy-small" onclick="copySection('signature')">Copy</button>
+                </div>
+                <pre id="jwt-signature" class="jwt-output"></pre>
+            </div>
+
+            <div class="jwt-info" id="jwt-info"></div>
+        </div>
+
+        <div class="examples-section">
+            <h2>JWT Exploitation Techniques</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h3>Algorithm Confusion</h3>
+                    <p>Change "alg" from RS256 to HS256 to trick server into using public key as HMAC secret</p>
+                    <code>"alg": "none"</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>Privilege Escalation</h3>
+                    <p>Modify payload claims like "admin": true or "role": "admin" to gain elevated privileges</p>
+                    <code>"role": "user" → "admin"</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>None Algorithm</h3>
+                    <p>Set algorithm to "none" to bypass signature verification in misconfigured systems</p>
+                    <code>Remove signature entirely</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>Kid Injection</h3>
+                    <p>Exploit "kid" (Key ID) parameter for SQL injection or path traversal attacks</p>
+                    <code>"kid": "../../../dev/null"</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3>💡 JWT Analysis Tips</h3>
+            <ul class="tips-list">
+                <li><strong>Structure:</strong> JWT has 3 parts: Header.Payload.Signature (base64url encoded)</li>
+                <li><strong>Header:</strong> Contains algorithm (alg) and token type (typ), vulnerable to tampering</li>
+                <li><strong>Payload:</strong> Contains claims (sub, name, iat, exp), main target for exploitation</li>
+                <li><strong>Signature:</strong> Verifies token integrity, but can be bypassed with "none" algorithm</li>
+                <li><strong>Common Claims:</strong> sub (subject), iat (issued at), exp (expiration), aud (audience)</li>
+                <li><strong>Testing:</strong> Try jwt_tool, john the ripper, or hashcat for cracking weak secrets</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/jwt-decoder.js"></script>
+</body>
+</html>

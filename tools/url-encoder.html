@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Encoder/Decoder - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="../index.html" class="logo">XploitBase</a>
+            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+                <span class="theme-icon">🌙</span>
+            </button>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="tool-hero">
+            <div class="tool-icon">🔗</div>
+            <h1>URL Encoder/Decoder</h1>
+            <p>Encode and decode URLs for CTF challenges, bypass filters, and test web applications</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="encode">Encode</button>
+            <button class="tab-btn" data-tab="decode">Decode</button>
+        </div>
+
+        <div class="tab-content active" id="encode-content">
+            <div class="input-section">
+                <label for="encode-input">
+                    <strong>Input Text/URL</strong>
+                    <span class="label-hint">Enter text or URL to encode</span>
+                </label>
+                <textarea id="encode-input" placeholder="https://example.com/search?q=test data" rows="6"></textarea>
+                <div class="encoding-options">
+                    <label>
+                        <input type="checkbox" id="encode-components" checked>
+                        <span>Encode URL Components Only</span>
+                    </label>
+                    <label>
+                        <input type="checkbox" id="double-encode">
+                        <span>Double Encode (bypass filters)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="encodeURL()">
+                    <span>🔒</span> Encode URL
+                </button>
+                <button class="btn-secondary" onclick="clearEncode()">Clear</button>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">
+                    <strong>Encoded Output</strong>
+                    <button class="btn-copy" onclick="copyEncoded()">
+                        <span>📋</span> Copy
+                    </button>
+                </div>
+                <textarea id="encode-output" readonly placeholder="Encoded URL will appear here..." rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="tab-content" id="decode-content">
+            <div class="input-section">
+                <label for="decode-input">
+                    <strong>Encoded URL</strong>
+                    <span class="label-hint">Enter encoded URL to decode</span>
+                </label>
+                <textarea id="decode-input" placeholder="https%3A%2F%2Fexample.com%2Fsearch%3Fq%3Dtest%20data" rows="6"></textarea>
+                <div class="encoding-options">
+                    <label>
+                        <input type="checkbox" id="recursive-decode">
+                        <span>Recursive Decode (decode multiple times)</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="btn-primary" onclick="decodeURL()">
+                    <span>🔓</span> Decode URL
+                </button>
+                <button class="btn-secondary" onclick="clearDecode()">Clear</button>
+            </div>
+
+            <div class="output-section">
+                <div class="output-header">
+                    <strong>Decoded Output</strong>
+                    <button class="btn-copy" onclick="copyDecoded()">
+                        <span>📋</span> Copy
+                    </button>
+                </div>
+                <textarea id="decode-output" readonly placeholder="Decoded URL will appear here..." rows="6"></textarea>
+            </div>
+        </div>
+
+        <div class="examples-section">
+            <h2>Common Use Cases</h2>
+            <div class="use-cases-grid">
+                <div class="use-case-card">
+                    <h3>Filter Bypass</h3>
+                    <p>Double-encode URLs to bypass WAF filters and input validation in CTF challenges</p>
+                    <code>alert(1) → %25616c%2565%2572%2574%25281%2529</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>Query Parameters</h3>
+                    <p>Properly encode special characters in URL query strings for web exploitation</p>
+                    <code>?q=test&name → ?q=test%26name</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>Path Traversal</h3>
+                    <p>Encode directory traversal sequences to bypass path sanitization</p>
+                    <code>../../etc/passwd → ..%2F..%2Fetc%2Fpasswd</code>
+                </div>
+                <div class="use-case-card">
+                    <h3>SSRF Payloads</h3>
+                    <p>Encode internal URLs and IP addresses for Server-Side Request Forgery attacks</p>
+                    <code>http://localhost → http%3A%2F%2Flocalhost</code>
+                </div>
+            </div>
+        </div>
+
+        <div class="tips-section">
+            <h3>💡 Quick Tips</h3>
+            <ul class="tips-list">
+                <li><strong>URL Encoding:</strong> Replaces unsafe ASCII characters with % followed by two hexadecimal digits</li>
+                <li><strong>Double Encoding:</strong> Encode twice to bypass filters that only decode once (WAF bypass technique)</li>
+                <li><strong>Component Encoding:</strong> Only encodes query parameters and path components, preserves URL structure</li>
+                <li><strong>Common Chars:</strong> Space→%20, &→%26, =→%3D, /→%2F, ?→%3F, #→%23</li>
+            </ul>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/url-encoder.js"></script>
+</body>
+</html>
