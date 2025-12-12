@@ -29,8 +29,6 @@ jobs:
           
           # Copy HTML files
           cp index.html main-repo/dist/xploitbase/
-          cp help.html main-repo/dist/xploitbase/
-          cp search.html main-repo/dist/xploitbase/
           
           # Copy CSS files
           cp -r css main-repo/dist/xploitbase/
@@ -40,14 +38,6 @@ jobs:
           
           # Copy category pages
           cp -r categories main-repo/dist/xploitbase/
-          
-          # Copy images and icons
-          cp -r images main-repo/dist/xploitbase/
-          cp icon-192.png main-repo/dist/xploitbase/
-          cp icon-512.png main-repo/dist/xploitbase/
-          
-          # Copy PWA and offline support
-          cp manifest.json main-repo/dist/xploitbase/
           cp sw.js main-repo/dist/xploitbase/
           
           # Copy documentation

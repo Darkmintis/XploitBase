@@ -3,7 +3,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     const mainSearchInput = document.getElementById('mainSearchInput');
     const searchResults = document.getElementById('searchResults');
-    const searchSuggestions = document.getElementById('searchSuggestions');
     const searchStats = document.getElementById('searchStats');
     const themeToggleBtn = document.getElementById('themeToggle');
     
@@ -53,10 +52,26 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (query) {
                     addToRecentSearches(query);
                     performInstantSearch(query);
-        }
+                }
+            }
+        });
+    }
+    
+    // Handle popular search tags
+    document.querySelectorAll('.search-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            const searchTerm = this.dataset.search;
+            if (mainSearchInput) {
+                mainSearchInput.value = searchTerm;
+                addToRecentSearches(searchTerm);
+                performInstantSearch(searchTerm);
+                mainSearchInput.focus();
+            }
+        });
     });
     
-    // Handle modal close
+    // Handle modal close (for compatibility)
+    const closeBtn = document.querySelector('.close');
     if(closeBtn) {
         closeBtn.addEventListener('click', function() {
             modal.style.display = 'none';
@@ -428,7 +443,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h3 class="result-title">${highlightMatch(result.commandName, query)}</h3>
                     <div class="result-command">
                         <code>${highlightMatch(result.command, query)}</code>
-                        <button class="result-copy" data-command="${result.command.replace(/"/g, '&quot;')}" title="Copy command">
+                        <button class="result-copy" data-command="${result.command.replaceAll('"', '&quot;')}" title="Copy command">
                             <i class="fas fa-copy"></i>
                         </button>
                     </div>
@@ -519,15 +534,4 @@ document.addEventListener('DOMContentLoaded', function() {
             setTimeout(() => toast.remove(), 300);
         }, 2000);
     }
-    
-    // Handle popular search tags
-    document.querySelectorAll('.search-tag').forEach(tag => {
-        tag.addEventListener('click', function() {
-            const searchTerm = this.dataset.search;
-            mainSearchInput.value = searchTerm;
-            addToRecentSearches(searchTerm);
-            performInstantSearch(searchTerm);
-            mainSearchInput.focus();
-        });
-    });
 });
