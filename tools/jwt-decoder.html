@@ -6,21 +6,31 @@
     <title>JWT Decoder - XploitBase</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="../index.html" class="logo">XploitBase</a>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
-            </button>
+    <header class="minimal-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="tool-hero">
-            <div class="tool-icon">🔑</div>
-            <h1>JWT Decoder</h1>
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="tool-hero">
+                <div class="tool-icon"><i class="fas fa-key"></i></div>
+                <h1>JWT Decoder</h1>
             <p>Decode, analyze, and manipulate JSON Web Tokens for CTF challenges and security testing</p>
         </div>
 
@@ -34,7 +44,7 @@
 
         <div class="action-buttons">
             <button class="btn-primary" onclick="decodeJWT()">
-                <span>🔓</span> Decode JWT
+                <i class="fas fa-unlock"></i> Decode JWT
             </button>
             <button class="btn-secondary" onclick="clearAll()">Clear</button>
         </div>
@@ -42,24 +52,24 @@
         <div class="jwt-output-container" id="output-container" style="display: none;">
             <div class="jwt-section">
                 <div class="jwt-section-header">
-                    <h3>🎨 Header</h3>
-                    <button class="btn-copy-small" onclick="copySection('header')">Copy</button>
+                    <h3><i class="fas fa-palette"></i> Header</h3>
+                    <button class="btn-copy-small" onclick="copySection('header')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <pre id="jwt-header" class="jwt-output"></pre>
             </div>
 
             <div class="jwt-section">
                 <div class="jwt-section-header">
-                    <h3>📦 Payload</h3>
-                    <button class="btn-copy-small" onclick="copySection('payload')">Copy</button>
+                    <h3><i class="fas fa-box"></i> Payload</h3>
+                    <button class="btn-copy-small" onclick="copySection('payload')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <pre id="jwt-payload" class="jwt-output"></pre>
             </div>
 
             <div class="jwt-section">
                 <div class="jwt-section-header">
-                    <h3>✍️ Signature</h3>
-                    <button class="btn-copy-small" onclick="copySection('signature')">Copy</button>
+                    <h3><i class="fas fa-signature"></i> Signature</h3>
+                    <button class="btn-copy-small" onclick="copySection('signature')"><i class="fas fa-copy"></i> Copy</button>
                 </div>
                 <pre id="jwt-signature" class="jwt-output"></pre>
             </div>
@@ -94,7 +104,7 @@
         </div>
 
         <div class="tips-section">
-            <h3>💡 JWT Analysis Tips</h3>
+            <h3><i class="fas fa-lightbulb"></i> JWT Analysis Tips</h3>
             <ul class="tips-list">
                 <li><strong>Structure:</strong> JWT has 3 parts: Header.Payload.Signature (base64url encoded)</li>
                 <li><strong>Header:</strong> Contains algorithm (alg) and token type (typ), vulnerable to tampering</li>
@@ -104,9 +114,17 @@
                 <li><strong>Testing:</strong> Try jwt_tool, john the ripper, or hashcat for cracking weak secrets</li>
             </ul>
         </div>
-    </div>
+        </div>
+    </main>
 
     <script src="../js/main.js"></script>
     <script src="../js/jwt-decoder.js"></script>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer"><i class="fas fa-exclamation-triangle"></i> For educational and authorized testing only</p>
+        </div>
+    </footer>
 </body>
 </html>

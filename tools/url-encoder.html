@@ -6,21 +6,31 @@
     <title>URL Encoder/Decoder - XploitBase</title>
     <link rel="stylesheet" href="../css/styles.css">
     <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-content">
-            <a href="../index.html" class="logo">XploitBase</a>
-            <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
-                <span class="theme-icon">🌙</span>
-            </button>
+    <header class="minimal-header">
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
         </div>
-    </nav>
+    </header>
 
-    <div class="container">
-        <div class="tool-hero">
-            <div class="tool-icon">🔗</div>
-            <h1>URL Encoder/Decoder</h1>
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+            
+            <div class="tool-hero">
+                <div class="tool-icon"><i class="fas fa-link"></i></div>
+                <h1>URL Encoder/Decoder</h1>
             <p>Encode and decode URLs for CTF challenges, bypass filters, and test web applications</p>
         </div>
 
@@ -50,7 +60,7 @@
 
             <div class="action-buttons">
                 <button class="btn-primary" onclick="encodeURL()">
-                    <span>🔒</span> Encode URL
+                    <i class="fas fa-lock"></i> Encode URL
                 </button>
                 <button class="btn-secondary" onclick="clearEncode()">Clear</button>
             </div>
@@ -59,7 +69,7 @@
                 <div class="output-header">
                     <strong>Encoded Output</strong>
                     <button class="btn-copy" onclick="copyEncoded()">
-                        <span>📋</span> Copy
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <textarea id="encode-output" readonly placeholder="Encoded URL will appear here..." rows="6"></textarea>
@@ -83,7 +93,7 @@
 
             <div class="action-buttons">
                 <button class="btn-primary" onclick="decodeURL()">
-                    <span>🔓</span> Decode URL
+                    <i class="fas fa-unlock"></i> Decode URL
                 </button>
                 <button class="btn-secondary" onclick="clearDecode()">Clear</button>
             </div>
@@ -92,7 +102,7 @@
                 <div class="output-header">
                     <strong>Decoded Output</strong>
                     <button class="btn-copy" onclick="copyDecoded()">
-                        <span>📋</span> Copy
+                        <i class="fas fa-copy"></i> Copy
                     </button>
                 </div>
                 <textarea id="decode-output" readonly placeholder="Decoded URL will appear here..." rows="6"></textarea>
@@ -126,7 +136,7 @@
         </div>
 
         <div class="tips-section">
-            <h3>💡 Quick Tips</h3>
+            <h3><i class="fas fa-lightbulb"></i> Quick Tips</h3>
             <ul class="tips-list">
                 <li><strong>URL Encoding:</strong> Replaces unsafe ASCII characters with % followed by two hexadecimal digits</li>
                 <li><strong>Double Encoding:</strong> Encode twice to bypass filters that only decode once (WAF bypass technique)</li>
@@ -134,9 +144,17 @@
                 <li><strong>Common Chars:</strong> Space→%20, &→%26, =→%3D, /→%2F, ?→%3F, #→%23</li>
             </ul>
         </div>
-    </div>
+        </div>
+    </main>
 
     <script src="../js/main.js"></script>
     <script src="../js/url-encoder.js"></script>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer"><i class="fas fa-exclamation-triangle"></i> For educational and authorized testing only</p>
+        </div>
+    </footer>
 </body>
 </html>

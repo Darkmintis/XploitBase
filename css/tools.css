@@ -6,13 +6,13 @@
     margin-bottom: 40px;
 }
 
-.tool-icon-large {
+.tool-icon-large, .tool-icon {
     font-size: 4rem;
     color: var(--accent-color);
     margin-bottom: 20px;
 }
 
-.tool-icon-large i {
+.tool-icon-large i, .tool-icon i {
     background: linear-gradient(135deg, var(--accent-color), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
