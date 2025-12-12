@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flag Format Converter - XploitBase</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="stylesheet" href="../css/tools.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <a href="../index.html"><h1>XploitBase</h1></a>
+            </div>
+            <div class="theme-toggle">
+                <button id="themeToggle" title="Toggle dark/light mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <a href="../index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+
+            <section class="tool-hero">
+                <div class="tool-icon-large">
+                    <i class="fas fa-flag"></i>
+                </div>
+                <h1 class="tool-title">Flag Format Converter</h1>
+                <p class="tool-description">Instantly convert messy text into proper CTF flag formats. Perfect for CTF, HTB, picoCTF, and custom formats!</p>
+            </section>
+
+            <section class="converter-section">
+                <div class="input-section">
+                    <label for="inputText">
+                        <i class="fas fa-keyboard"></i> Input Text
+                    </label>
+                    <textarea 
+                        id="inputText" 
+                        placeholder="Example: CTFGENSHINISMAGIC or htbadminpassword123"
+                        rows="4"
+                    ></textarea>
+                    <div class="input-options">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="autoDetect" checked>
+                            Auto-detect flag format
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="smartSplit" checked>
+                            Smart word splitting
+                        </label>
+                    </div>
+                </div>
+
+                <div class="format-selector">
+                    <h3><i class="fas fa-cog"></i> Flag Format</h3>
+                    <div class="format-grid">
+                        <button class="format-btn" data-format="HTB">HTB{...}</button>
+                        <button class="format-btn active" data-format="CTF">CTF{...}</button>
+                        <button class="format-btn" data-format="FLAG">FLAG{...}</button>
+                        <button class="format-btn" data-format="picoCTF">picoCTF{...}</button>
+                        <button class="format-btn" data-format="custom">Custom</button>
+                    </div>
+                    <div id="customFormatInput" style="display: none; margin-top: 15px;">
+                        <input type="text" id="customFormat" placeholder="Enter custom prefix (e.g., MYCTF)" style="width: 100%; padding: 10px; border-radius: 6px; background-color: var(--bg-secondary); border: 1px solid var(--border-color); color: var(--text-primary);">
+                    </div>
+                </div>
+
+                <div class="convert-button-container">
+                    <button id="convertBtn" class="convert-btn">
+                        <i class="fas fa-sync-alt"></i> Convert
+                    </button>
+                </div>
+
+                <div class="output-section" id="outputSection" style="display: none;">
+                    <h3><i class="fas fa-check-circle"></i> Results</h3>
+                    <div id="resultsContainer"></div>
+                </div>
+            </section>
+
+            <section class="examples-section">
+                <h2><i class="fas fa-lightbulb"></i> Examples</h2>
+                <div class="examples-grid">
+                    <div class="example-card" data-example="CTFGENSHINISMAGIC" data-format="CTF">
+                        <div class="example-input">
+                            <code>CTFGENSHINISMAGIC</code>
+                        </div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="example-output">
+                            <code>CTF{GENSHIN_IS_MAGIC}</code>
+                        </div>
+                        <button class="try-example-btn">Try This</button>
+                    </div>
+                    <div class="example-card" data-example="htbadminpassword" data-format="HTB">
+                        <div class="example-input">
+                            <code>htbadminpassword</code>
+                        </div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="example-output">
+                            <code>HTB{admin_password}</code>
+                        </div>
+                        <button class="try-example-btn">Try This</button>
+                    </div>
+                    <div class="example-card" data-example="flagthisistest" data-format="FLAG">
+                        <div class="example-input">
+                            <code>flagthisistest</code>
+                        </div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="example-output">
+                            <code>flag{this_is_test}</code>
+                        </div>
+                        <button class="try-example-btn">Try This</button>
+                    </div>
+                    <div class="example-card" data-example="picoCTFwebexploitbasic" data-format="picoCTF">
+                        <div class="example-input">
+                            <code>picoCTFwebexploitbasic</code>
+                        </div>
+                        <i class="fas fa-arrow-down"></i>
+                        <div class="example-output">
+                            <code>picoCTF{web_exploit_basic}</code>
+                        </div>
+                        <button class="try-example-btn">Try This</button>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tips-section">
+                <h2><i class="fas fa-info-circle"></i> How It Works</h2>
+                <div class="tips-grid">
+                    <div class="tip-card">
+                        <i class="fas fa-magic"></i>
+                        <h4>Auto-Detection</h4>
+                        <p>Automatically detects common CTF flag prefixes (CTF, HTB, FLAG, picoCTF) in your input</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-cut"></i>
+                        <h4>Smart Splitting</h4>
+                        <p>Intelligently splits camelCase and concatenated words using pattern recognition</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-text-height"></i>
+                        <h4>Case Handling</h4>
+                        <p>Converts to proper case - uppercase for prefix, varies for flag content based on original input</p>
+                    </div>
+                    <div class="tip-card">
+                        <i class="fas fa-copy"></i>
+                        <h4>Quick Copy</h4>
+                        <p>One-click copy for all generated variations - perfect for quick submission</p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 XploitBase by <a href="https://darkmintis.dev" target="_blank">Darkmintis</a> | <a href="https://github.com/Darkmintis/XploitBase" target="_blank"><i class="fab fa-github"></i> GitHub</a></p>
+            <p class="footer-disclaimer">⚠️ For educational and authorized testing only</p>
+        </div>
+    </footer>
+
+    <script src="../js/flag-converter.js"></script>
+    <script>
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        if (currentTheme === 'light') {
+            document.body.classList.add('light-theme');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        }
+        
+        themeToggleBtn.addEventListener('click', function() {
+            document.body.classList.toggle('light-theme');
+            if (document.body.classList.contains('light-theme')) {
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        });
+    </script>
+</body>
+</html>

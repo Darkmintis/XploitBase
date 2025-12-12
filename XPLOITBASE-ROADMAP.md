@@ -263,7 +263,7 @@ Allow searching by multiple dimensions:
 **Solution:** Auto-convert found text to proper flag format
 
 **Examples:**
-- `IIMSGENSHINISMAGIC` → `IIMS{GENSHIN_IS_MAGIC}`
+- `CTFGENSHINISMAGIC` → `CTF{GENSHIN_IS_MAGIC}`
 - `HTBADMINPASSWORD` → `HTB{ADMIN_PASSWORD}`
 - `flagthisistest` → `flag{this_is_test}`
 
@@ -276,7 +276,6 @@ Allow searching by multiple dimensions:
 - [ ] History of conversions
 
 **Supported Formats:**
-- [ ] IIMS{...}
 - [ ] HTB{...}
 - [ ] CTF{...}
 - [ ] FLAG{...}
