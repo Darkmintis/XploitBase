@@ -384,7 +384,7 @@
     position: absolute;
     top: 15px;
     right: 15px;
-    background: linear-gradient(135deg, #f59e0b, #ef4444);
+    background: linear-gradient(135deg, #d97706, #dc2626);
     color: white;
     padding: 4px 12px;
     border-radius: 20px;
@@ -405,7 +405,7 @@
 
 .new-badge {
     display: inline-block;
-    background: linear-gradient(135deg, #ef4444, #f97316);
+    background: linear-gradient(135deg, #dc2626, #ea580c);
     color: white;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;

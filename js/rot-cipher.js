@@ -125,7 +125,7 @@ function showToast(message, type = 'success') {
 }
 
 // Auto-decode on page load if there's example text
-window.addEventListener('DOMContentLoaded', () => {
+globalThis.addEventListener('DOMContentLoaded', () => {
     const inputText = document.getElementById('inputText').value.trim();
     if (inputText) {
         decodeAll();

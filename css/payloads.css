@@ -125,43 +125,43 @@
 }
 
 .payload-category.xss {
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
+    background: rgba(239, 68, 68, 0.15);
+    color: #dc2626;
 }
 
 .payload-category.sqli {
-    background: rgba(59, 130, 246, 0.1);
-    color: #3b82f6;
+    background: rgba(59, 130, 246, 0.15);
+    color: #2563eb;
 }
 
 .payload-category.ssti {
-    background: rgba(168, 85, 247, 0.1);
-    color: #a855f7;
+    background: rgba(168, 85, 247, 0.15);
+    color: #9333ea;
 }
 
 .payload-category.lfi {
-    background: rgba(234, 179, 8, 0.1);
-    color: #eab308;
+    background: rgba(234, 179, 8, 0.15);
+    color: #ca8a04;
 }
 
 .payload-category.cmdi {
-    background: rgba(34, 197, 94, 0.1);
-    color: #22c55e;
+    background: rgba(34, 197, 94, 0.15);
+    color: #16a34a;
 }
 
 .payload-category.xxe {
-    background: rgba(249, 115, 22, 0.1);
-    color: #f97316;
+    background: rgba(249, 115, 22, 0.15);
+    color: #ea580c;
 }
 
 .payload-category.ssrf {
-    background: rgba(20, 184, 166, 0.1);
-    color: #14b8a6;
+    background: rgba(20, 184, 166, 0.15);
+    color: #0d9488;
 }
 
 .payload-category.bypass {
-    background: rgba(244, 63, 94, 0.1);
-    color: #f43f5e;
+    background: rgba(244, 63, 94, 0.15);
+    color: #e11d48;
 }
 
 .payload-description {

@@ -144,13 +144,19 @@ function copyPayload(id) {
         
         showToast('Payload copied to clipboard!', 'success');
     }).catch(err => {
-        // Fallback for older browsers
+        // Fallback using legacy method
         const textarea = document.createElement('textarea');
         textarea.value = payload.payload;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
         document.body.appendChild(textarea);
         textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
+        try {
+            document.execCommand('copy');
+        } catch (e) {
+            console.error('Copy failed:', e);
+        }
+        textarea.remove();
         
         btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
         btn.classList.add('copied');

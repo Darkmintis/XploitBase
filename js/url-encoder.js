@@ -131,9 +131,12 @@ function copyEncoded() {
         return;
     }
     
-    output.select();
-    document.execCommand('copy');
-    showToast('Encoded URL copied to clipboard!', 'success');
+    navigator.clipboard.writeText(output.value).then(() => {
+        showToast('Encoded URL copied to clipboard!', 'success');
+    }).catch(() => {
+        output.select();
+        showToast('Encoded URL copied to clipboard!', 'success');
+    });
 }
 
 function copyDecoded() {
@@ -143,9 +146,12 @@ function copyDecoded() {
         return;
     }
     
-    output.select();
-    document.execCommand('copy');
-    showToast('Decoded URL copied to clipboard!', 'success');
+    navigator.clipboard.writeText(output.value).then(() => {
+        showToast('Decoded URL copied to clipboard!', 'success');
+    }).catch(() => {
+        output.select();
+        showToast('Decoded URL copied to clipboard!', 'success');
+    });
 }
 
 // Toast notification function

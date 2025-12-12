@@ -229,9 +229,9 @@
 }
 
 .clear-btn:hover {
-    border-color: #ef4444;
-    color: #ef4444;
-    background-color: rgba(239, 68, 68, 0.1);
+    border-color: #dc2626;
+    color: #dc2626;
+    background-color: rgba(220, 38, 38, 0.15);
 }
 
 .copy-output-btn {

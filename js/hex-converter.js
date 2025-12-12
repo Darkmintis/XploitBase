@@ -93,25 +93,25 @@ function textToBytes(text) {
 }
 
 function hexToBytes(hex) {
-    const cleaned = hex.replace(/[^0-9a-fA-F]/g, '');
+    const cleaned = hex.replaceAll(/[^0-9a-fA-F]/g, '');
     if (cleaned.length % 2 !== 0) {
         throw new Error('Hex string must have even length');
     }
     const bytes = [];
     for (let i = 0; i < cleaned.length; i += 2) {
-        bytes.push(parseInt(cleaned.substr(i, 2), 16));
+        bytes.push(Number.parseInt(cleaned.substr(i, 2), 16));
     }
     return new Uint8Array(bytes);
 }
 
 function binaryToBytes(binary) {
-    const cleaned = binary.replace(/[^01]/g, '');
+    const cleaned = binary.replaceAll(/[^01]/g, '');
     if (cleaned.length % 8 !== 0) {
         throw new Error('Binary string length must be multiple of 8');
     }
     const bytes = [];
     for (let i = 0; i < cleaned.length; i += 8) {
-        bytes.push(parseInt(cleaned.substr(i, 8), 2));
+        bytes.push(Number.parseInt(cleaned.substr(i, 8), 2));
     }
     return new Uint8Array(bytes);
 }
@@ -122,7 +122,7 @@ function decimalToBytes(decimal) {
         throw new Error('Invalid decimal format');
     }
     const bytes = numbers.map(n => {
-        const num = parseInt(n, 10);
+        const num = Number.parseInt(n, 10);
         if (num < 0 || num > 255) {
             throw new Error(`Decimal value ${num} out of range (0-255)`);
         }
@@ -137,7 +137,7 @@ function octalToBytes(octal) {
         throw new Error('Invalid octal format');
     }
     const bytes = numbers.map(n => {
-        const num = parseInt(n, 8);
+        const num = Number.parseInt(n, 8);
         if (num < 0 || num > 255) {
             throw new Error(`Octal value ${n} out of range`);
         }
@@ -238,7 +238,7 @@ function showToast(message, type = 'success') {
 }
 
 // Auto-convert on page load if there's example text
-window.addEventListener('DOMContentLoaded', () => {
+globalThis.addEventListener('DOMContentLoaded', () => {
     const inputText = document.getElementById('inputText').value.trim();
     if (inputText) {
         convert();

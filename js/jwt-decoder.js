@@ -51,7 +51,7 @@ function decodeJWT() {
 // Base64 URL decode (JWT uses base64url encoding)
 function base64UrlDecode(str) {
     // Replace URL-safe characters
-    str = str.replace(/-/g, '+').replace(/_/g, '/');
+    str = str.replaceAll('-', '+').replaceAll('_', '/');
     
     // Add padding if needed
     while (str.length % 4) {
@@ -193,14 +193,20 @@ function copySection(section) {
     navigator.clipboard.writeText(text).then(() => {
         showToast(`${section.charAt(0).toUpperCase() + section.slice(1)} copied to clipboard!`, 'success');
     }).catch(() => {
-        // Fallback for older browsers
+        // Fallback using legacy method
         const textarea = document.createElement('textarea');
         textarea.value = text;
+        textarea.style.position = 'fixed';
+        textarea.style.opacity = '0';
         document.body.appendChild(textarea);
         textarea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textarea);
-        showToast(`${section.charAt(0).toUpperCase() + section.slice(1)} copied to clipboard!`, 'success');
+        try {
+            document.execCommand('copy');
+            showToast(`${section.charAt(0).toUpperCase() + section.slice(1)} copied to clipboard!`, 'success');
+        } catch (err) {
+            showToast('Failed to copy', 'error');
+        }
+        textarea.remove();
     });
 }
 

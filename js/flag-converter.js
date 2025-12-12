@@ -86,7 +86,7 @@ document.addEventListener('DOMContentLoaded', function() {
             for (const prefix of flagPrefixes) {
                 const regex = new RegExp(`^${prefix}[{]?`, 'i');
                 cleanText = cleanText.replace(regex, '');
-                cleanText = cleanText.replace(/[{}]/g, '');
+                cleanText = cleanText.replaceAll(/[{}]/g, '');
             }
         }
         
@@ -95,66 +95,58 @@ document.addEventListener('DOMContentLoaded', function() {
             // Smart word splitting variations
             const words = smartWordSplit(cleanText);
             
-            // Variation 1: UPPERCASE with underscores
-            results.push({
-                name: 'Uppercase with underscores',
-                flag: `${format}{${words.map(w => w.toUpperCase()).join('_')}}`,
-                description: 'Standard uppercase format'
-            });
-            
-            // Variation 2: lowercase with underscores
-            results.push({
-                name: 'Lowercase with underscores',
-                flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('_')}}`,
-                description: 'All lowercase variant'
-            });
-            
-            // Variation 3: Mixed case with underscores
-            results.push({
-                name: 'Mixed case with underscores',
-                flag: `${format}{${words.join('_')}}`,
-                description: 'Preserves original casing'
-            });
-            
-            // Variation 4: UPPERCASE without underscores
-            results.push({
-                name: 'Uppercase no separators',
-                flag: `${format}{${words.map(w => w.toUpperCase()).join('')}}`,
-                description: 'Concatenated uppercase'
-            });
-            
-            // Variation 5: lowercase without underscores
-            results.push({
-                name: 'Lowercase no separators',
-                flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('')}}`,
-                description: 'Concatenated lowercase'
-            });
-            
-            // Variation 6: With hyphens
-            results.push({
-                name: 'Lowercase with hyphens',
-                flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('-')}}`,
-                description: 'Hyphen separated'
-            });
+            // Add all variations at once
+            results.push(
+                {
+                    name: 'Uppercase with underscores',
+                    flag: `${format}{${words.map(w => w.toUpperCase()).join('_')}}`,
+                    description: 'Standard uppercase format'
+                },
+                {
+                    name: 'Lowercase with underscores',
+                    flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('_')}}`,
+                    description: 'All lowercase variant'
+                },
+                {
+                    name: 'Mixed case with underscores',
+                    flag: `${format}{${words.join('_')}}`,
+                    description: 'Preserves original casing'
+                },
+                {
+                    name: 'Uppercase no separators',
+                    flag: `${format}{${words.map(w => w.toUpperCase()).join('')}}`,
+                    description: 'Concatenated uppercase'
+                },
+                {
+                    name: 'Lowercase no separators',
+                    flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('')}}`,
+                    description: 'Concatenated lowercase'
+                },
+                {
+                    name: 'Lowercase with hyphens',
+                    flag: `${format.toLowerCase()}{${words.map(w => w.toLowerCase()).join('-')}}`,
+                    description: 'Hyphen separated'
+                }
+            );
         } else {
-            // Simple variations without splitting
-            results.push({
-                name: 'Uppercase',
-                flag: `${format}{${cleanText.toUpperCase()}}`,
-                description: 'Simple uppercase'
-            });
-            
-            results.push({
-                name: 'Lowercase',
-                flag: `${format.toLowerCase()}{${cleanText.toLowerCase()}}`,
-                description: 'Simple lowercase'
-            });
-            
-            results.push({
-                name: 'Original case',
-                flag: `${format}{${cleanText}}`,
-                description: 'Preserves input casing'
-            });
+            // Simple variations without splitting - add all at once
+            results.push(
+                {
+                    name: 'Uppercase',
+                    flag: `${format}{${cleanText.toUpperCase()}}`,
+                    description: 'Simple uppercase'
+                },
+                {
+                    name: 'Lowercase',
+                    flag: `${format.toLowerCase()}{${cleanText.toLowerCase()}}`,
+                    description: 'Simple lowercase'
+                },
+                {
+                    name: 'Original case',
+                    flag: `${format}{${cleanText}}`,
+                    description: 'Preserves input casing'
+                }
+            );
         }
         
         return results;
@@ -162,7 +154,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function smartWordSplit(text) {
         // Remove any existing separators
-        text = text.replace(/[_\-\s]+/g, '');
+        text = text.replaceAll(/[_\-\s]+/g, '');
         
         // Split on capital letters (camelCase)
         let words = text.split(/(?=[A-Z])/);

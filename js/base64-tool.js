@@ -79,7 +79,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            const encoded = btoa(unescape(encodeURIComponent(text)));
+            // Use TextEncoder for proper UTF-8 encoding
+            const bytes = new TextEncoder().encode(text);
+            const binString = String.fromCodePoint(...bytes);
+            const encoded = btoa(binString);
             encodeOutput.value = encoded;
             showToast('Text encoded successfully');
         } catch (error) {
@@ -96,7 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         
         try {
-            const decoded = decodeURIComponent(escape(atob(text)));
+            // Use TextDecoder for proper UTF-8 decoding
+            const binString = atob(text);
+            const bytes = Uint8Array.from(binString, (m) => m.codePointAt(0));
+            const decoded = new TextDecoder().decode(bytes);
             decodeOutput.value = decoded;
             showToast('Base64 decoded successfully');
         } catch (error) {

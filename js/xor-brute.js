@@ -119,7 +119,7 @@ function checkEnglish(text) {
     }
     
     // Also check for reasonable letter frequency
-    const letters = text.replace(/[^a-zA-Z]/g, '').length;
+    const letters = text.replaceAll(/[^a-zA-Z]/g, '').length;
     const ratio = letters / text.length;
     
     return matches >= 2 || ratio > 0.7;
@@ -174,13 +174,13 @@ function copyResult(text, key) {
 
 // Helper functions
 function hexToBytes(hex) {
-    const cleaned = hex.replace(/[^0-9a-fA-F]/g, '');
+    const cleaned = hex.replaceAll(/[^0-9a-fA-F]/g, '');
     if (cleaned.length % 2 !== 0) {
         throw new Error('Hex string must have even length');
     }
     const bytes = [];
     for (let i = 0; i < cleaned.length; i += 2) {
-        bytes.push(parseInt(cleaned.substr(i, 2), 16));
+        bytes.push(Number.parseInt(cleaned.substr(i, 2), 16));
     }
     return new Uint8Array(bytes);
 }
