@@ -1,0 +1,112 @@
+name: Deploy XploitBase to darkmintis-dev
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout XploitBase repository
+        uses: actions/checkout@v4
+
+      - name: Checkout darkmintis-dev
+        uses: actions/checkout@v4
+        with:
+          repository: Darkmintis/darkmintis-dev
+          token: ${{ secrets.DEPLOY_PAT }}
+          path: main-repo
+
+      - name: Copy production files to main repo
+        run: |
+          # Remove old deployment
+          rm -rf main-repo/dist/xploitbase
+          mkdir -p main-repo/dist/xploitbase
+          
+          # Copy HTML files
+          cp index.html main-repo/dist/xploitbase/
+          cp help.html main-repo/dist/xploitbase/
+          cp search.html main-repo/dist/xploitbase/
+          
+          # Copy CSS files
+          cp -r css main-repo/dist/xploitbase/
+          
+          # Copy JavaScript files
+          cp -r js main-repo/dist/xploitbase/
+          
+          # Copy category pages
+          cp -r categories main-repo/dist/xploitbase/
+          
+          # Copy images and icons
+          cp -r images main-repo/dist/xploitbase/
+          cp icon-192.png main-repo/dist/xploitbase/
+          cp icon-512.png main-repo/dist/xploitbase/
+          
+          # Copy PWA and offline support
+          cp manifest.json main-repo/dist/xploitbase/
+          cp sw.js main-repo/dist/xploitbase/
+          
+          # Copy documentation
+          cp LICENSE main-repo/dist/xploitbase/
+          cp README.md main-repo/dist/xploitbase/
+          
+          # Copy .gitignore if exists
+          [ -f .gitignore ] && cp .gitignore main-repo/dist/xploitbase/ || true
+          
+          echo "✅ XploitBase production files copied successfully"
+          echo "📦 Deployed files:"
+          ls -la main-repo/dist/xploitbase/
+
+      - name: Commit and push to darkmintis-dev
+        run: |
+          cd main-repo
+          git config user.name "GitHub Actions Bot"
+          git config user.email "actions@github.com"
+          
+          # Add changes
+          git add dist/xploitbase
+          
+          # Commit only if there are changes
+          if git diff --staged --quiet; then
+            echo "ℹ️ No changes to deploy"
+          else
+            git commit -m "🔄 Update XploitBase from commit ${GITHUB_SHA:0:7}"
+            git push
+            echo "✅ Changes pushed successfully"
+          fi
+
+      - name: Deployment summary
+        run: |
+          echo "## 🎉 XploitBase Deployment Complete!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### ⚡ Tool Information" >> $GITHUB_STEP_SUMMARY
+          echo "- **Tool**: XploitBase - Your Ultimate CTF Companion" >> $GITHUB_STEP_SUMMARY
+          echo "- **Live URL**: https://darkmintis.dev/xploitbase" >> $GITHUB_STEP_SUMMARY
+          echo "- **Commit**: \`${GITHUB_SHA:0:7}\`" >> $GITHUB_STEP_SUMMARY
+          echo "- **Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "- **Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 🚀 Key Features" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 16 CTF Categories with 100+ tools" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ 500+ Commands with explanations" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Offline Support (PWA + Service Worker)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Fast 2-Click Access to any tool" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Dark/Light Theme Toggle" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ CTF Timer with Task Tracking" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Notes & Favorites System" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Keyboard Shortcuts for power users" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 📦 Deployed Files" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ HTML Pages (index, help, search, 16 category pages)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ CSS Stylesheets (styles, features, command-enhancements)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ JavaScript Modules (data, main, category, favorites, timer, notes, etc.)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Images & Icons (192x192, 512x512 PWA icons)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ PWA Support (manifest.json, service worker)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Documentation (README.md, LICENSE)" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### 💡 For CTF Players" >> $GITHUB_STEP_SUMMARY
+          echo "XploitBase is a **self-contained offline toolkit** perfect for CTF competitions. Access all tools and commands without internet, organize your workflow, track time, and solve challenges efficiently!" >> $GITHUB_STEP_SUMMARY
