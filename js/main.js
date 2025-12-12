@@ -1,14 +1,17 @@
 // Main JavaScript for XploitBase
 
 document.addEventListener('DOMContentLoaded', function() {
-    const searchInput = document.getElementById('searchInput');
-    const searchBtn = document.getElementById('searchBtn');
-    const categoryCards = document.querySelectorAll('.category-card');
-    const modal = document.getElementById('learnModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalContent = document.getElementById('modalContent');
-    const closeBtn = document.querySelector('.close');
+    const mainSearchInput = document.getElementById('mainSearchInput');
+    const searchResults = document.getElementById('searchResults');
+    const searchSuggestions = document.getElementById('searchSuggestions');
+    const searchStats = document.getElementById('searchStats');
     const themeToggleBtn = document.getElementById('themeToggle');
+    
+    let searchIndex = [];
+    let recentSearches = JSON.parse(localStorage.getItem('recentSearches')) || [];
+    
+    // Build search index from all categories
+    buildSearchIndex();
     
     // Theme Toggle functionality
     const currentTheme = localStorage.getItem('theme') || 'dark';
@@ -22,10 +25,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Handle theme toggle click
     themeToggleBtn.addEventListener('click', function() {
-        // Toggle theme class on body
         document.body.classList.toggle('light-theme');
         
-        // Update theme in localStorage
         if (document.body.classList.contains('light-theme')) {
             localStorage.setItem('theme', 'light');
             themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
@@ -35,19 +36,23 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     
-    // Handle category card clicks
-    categoryCards.forEach(card => {
-        card.addEventListener('click', function() {
-            const categoryId = this.dataset.category;
-            navigateToCategory(categoryId);
+    // Real-time search
+    if (mainSearchInput) {
+        mainSearchInput.addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query.length >= 2) {
+                performInstantSearch(query);
+            } else {
+                clearSearchResults();
+            }
         });
-    });
-    
-    // Handle search functionality
-    searchBtn.addEventListener('click', performSearch);
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            performSearch();
+        
+        mainSearchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const query = this.value.trim();
+                if (query) {
+                    addToRecentSearches(query);
+                    performInstantSearch(query);
         }
     });
     
@@ -359,4 +364,170 @@ document.addEventListener('DOMContentLoaded', function() {
             }, 500);
         }, 2000);
     }
+    
+    // Build search index
+    function buildSearchIndex() {
+        searchIndex = [];
+        if (typeof xploitBaseData !== 'undefined') {
+            xploitBaseData.categories.forEach(category => {
+                category.tools.forEach(tool => {
+                    tool.commands.forEach(command => {
+                        searchIndex.push({
+                            category: category.name,
+                            categoryId: category.id,
+                            tool: tool.name,
+                            commandName: command.name,
+                            command: command.command,
+                            description: command.description || '',
+                            searchText: `${category.name} ${tool.name} ${command.name} ${command.command} ${command.description || ''}`.toLowerCase()
+                        });
+                    });
+                });
+            });
+        }
+        updateSearchStats();
+    }
+    
+    // Perform instant search
+    function performInstantSearch(query) {
+        const startTime = performance.now();
+        const queryLower = query.toLowerCase();
+        const results = searchIndex.filter(item => 
+            item.searchText.includes(queryLower)
+        ).slice(0, 20);
+        
+        const endTime = performance.now();
+        const searchTime = ((endTime - startTime) / 1000).toFixed(4);
+        
+        displaySearchResults(results, query, searchTime);
+    }
+    
+    // Display search results
+    function displaySearchResults(results, query, searchTime) {
+        if (results.length === 0) {
+            searchResults.innerHTML = `
+                <div class="no-results">
+                    <i class="fas fa-search"></i>
+                    <p>No results found for "${query}"</p>
+                    <p class="hint">Try different keywords or browse categories</p>
+                </div>
+            `;
+            searchResults.style.display = 'block';
+            searchStats.textContent = `${results.length} results in ${searchTime}s`;
+            return;
+        }
+        
+        let html = '<div class="results-grid">';
+        results.forEach(result => {
+            html += `
+                <div class="result-card">
+                    <div class="result-header">
+                        <span class="result-category">${result.category}</span>
+                        <span class="result-tool">${result.tool}</span>
+                    </div>
+                    <h3 class="result-title">${highlightMatch(result.commandName, query)}</h3>
+                    <div class="result-command">
+                        <code>${highlightMatch(result.command, query)}</code>
+                        <button class="result-copy" data-command="${result.command.replace(/"/g, '&quot;')}" title="Copy command">
+                            <i class="fas fa-copy"></i>
+                        </button>
+                    </div>
+                    <p class="result-description">${highlightMatch(result.description, query)}</p>
+                    <a href="categories/${result.categoryId}.html" class="result-link">
+                        View in ${result.category} <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            `;
+        });
+        html += '</div>';
+        
+        searchResults.innerHTML = html;
+        searchResults.style.display = 'block';
+        searchStats.textContent = `${results.length} results in ${searchTime}s`;
+        
+        // Add copy functionality
+        document.querySelectorAll('.result-copy').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const command = this.dataset.command;
+                copyToClipboard(command);
+            });
+        });
+    }
+    
+    // Highlight matched text
+    function highlightMatch(text, query) {
+        if (!text) return '';
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<mark>$1</mark>');
+    }
+    
+    // Clear search results
+    function clearSearchResults() {
+        searchResults.innerHTML = '';
+        searchResults.style.display = 'none';
+        searchStats.textContent = '';
+    }
+    
+    // Update search stats
+    function updateSearchStats() {
+        if (searchStats && searchIndex.length > 0) {
+            searchStats.textContent = `${searchIndex.length} commands indexed`;
+        }
+    }
+    
+    // Add to recent searches
+    function addToRecentSearches(query) {
+        if (!recentSearches.includes(query)) {
+            recentSearches.unshift(query);
+            recentSearches = recentSearches.slice(0, 10);
+            localStorage.setItem('recentSearches', JSON.stringify(recentSearches));
+        }
+    }
+    
+    // Copy to clipboard
+    function copyToClipboard(text) {
+        navigator.clipboard.writeText(text).then(() => {
+            showToast('Command copied to clipboard!');
+        }).catch(err => {
+            console.error('Failed to copy:', err);
+            showToast('Failed to copy command');
+        });
+    }
+    
+    // Show toast
+    function showToast(message) {
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.textContent = message;
+        toast.style.position = 'fixed';
+        toast.style.bottom = '20px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = 'var(--accent-color)';
+        toast.style.color = '#fff';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '6px';
+        toast.style.zIndex = '10000';
+        toast.style.boxShadow = '0 4px 12px rgba(0,0,0,0.3)';
+        
+        document.body.appendChild(toast);
+        
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 2000);
+    }
+    
+    // Handle popular search tags
+    document.querySelectorAll('.search-tag').forEach(tag => {
+        tag.addEventListener('click', function() {
+            const searchTerm = this.dataset.search;
+            mainSearchInput.value = searchTerm;
+            addToRecentSearches(searchTerm);
+            performInstantSearch(searchTerm);
+            mainSearchInput.focus();
+        });
+    });
 });

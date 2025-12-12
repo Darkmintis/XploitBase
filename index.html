@@ -7,18 +7,16 @@
     <link rel="stylesheet" href="css/styles.css">
     <link rel="stylesheet" href="css/command-enhancements.css">
     <link rel="stylesheet" href="css/features.css">
+    <link rel="stylesheet" href="css/search.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <header>
+    <header class="minimal-header">
         <div class="container">
             <div class="logo">
                 <h1>XploitBase</h1>
             </div>
-            <div class="search-container">
-                <input type="text" id="searchInput" placeholder="Search tools and commands...">
-                <button id="searchBtn" title="Search"><i class="fas fa-search"></i></button>
-            </div>            <div class="theme-toggle">
+            <div class="theme-toggle">
                 <button id="themeToggle" title="Toggle dark/light mode">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -28,103 +26,90 @@
 
     <main>
         <div class="container">
-            <!-- Hero Section -->
-            <section class="hero">
-                <div class="hero-content">
-                    <h1 class="hero-title">XploitBase</h1>
-                    <p class="hero-subtitle">Practical Exploitation Commands & Payloads for CTF</p>
+            <!-- Hero Search Section -->
+            <section class="hero-search">
+                <h1 class="search-title">Find Any Exploit in <span class="highlight">0.01s</span></h1>
+                <p class="search-subtitle">Search across 500+ exploitation commands, payloads, and techniques</p>
+                
+                <div class="main-search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" id="mainSearchInput" placeholder='Try "sql injection", "xss payload", "reverse shell", or "CVE-2021-44228"...' autocomplete="off">
+                    <div class="search-stats" id="searchStats"></div>
                 </div>
+
+                <div class="search-suggestions" id="searchSuggestions"></div>
+                <div class="search-results" id="searchResults"></div>
             </section>
 
-            <!-- CTF Categories Section -->
-            <section class="categories">
-                <h2 class="section-title"><i class="fas fa-bullseye"></i> CTF Categories</h2>
-                <div class="grid">
-                    <a href="categories/web.html" class="category-card">
-                        <i class="fas fa-globe"></i>
-                        <h3>Web</h3>
+            <!-- Quick Access Categories -->
+            <section class="quick-categories">
+                <h2 class="section-title">Quick Access</h2>
+                <div class="category-pills">
+                    <a href="categories/web.html" class="category-pill">
+                        <i class="fas fa-globe"></i> Web
                     </a>
-                    <a href="categories/reverse.html" class="category-card">
-                        <i class="fas fa-undo"></i>
-                        <h3>Reverse Engineering</h3>
+                    <a href="categories/crypto.html" class="category-pill">
+                        <i class="fas fa-key"></i> Crypto
                     </a>
-                    <a href="categories/binary.html" class="category-card">
-                        <i class="fas fa-microchip"></i>
-                        <h3>Binary Exploitation</h3>
+                    <a href="categories/forensics.html" class="category-pill">
+                        <i class="fas fa-search"></i> Forensics
                     </a>
-                    <a href="categories/crypto.html" class="category-card">
-                        <i class="fas fa-key"></i>
-                        <h3>Cryptography</h3>
+                    <a href="categories/reverse.html" class="category-pill">
+                        <i class="fas fa-undo"></i> Reverse
                     </a>
-                    <a href="categories/forensics.html" class="category-card">
-                        <i class="fas fa-search"></i>
-                        <h3>Forensics</h3>
+                    <a href="categories/binary.html" class="category-pill">
+                        <i class="fas fa-microchip"></i> Binary
                     </a>
-                    <a href="categories/osint.html" class="category-card">
-                        <i class="fas fa-eye"></i>
-                        <h3>OSINT</h3>
+                    <a href="categories/osint.html" class="category-pill">
+                        <i class="fas fa-eye"></i> OSINT
                     </a>
-                    <a href="categories/stego.html" class="category-card">
-                        <i class="fas fa-image"></i>
-                        <h3>Steganography</h3>
+                    <a href="categories/stego.html" class="category-pill">
+                        <i class="fas fa-image"></i> Stego
                     </a>
-                    <a href="categories/mobile.html" class="category-card">
-                        <i class="fas fa-mobile-alt"></i>
-                        <h3>Mobile</h3>
+                    <a href="categories/network.html" class="category-pill">
+                        <i class="fas fa-network-wired"></i> Network
                     </a>
-                    <a href="categories/network.html" class="category-card">
-                        <i class="fas fa-network-wired"></i>
-                        <h3>Networking</h3>
+                    <a href="categories/privesc.html" class="category-pill">
+                        <i class="fas fa-angle-double-up"></i> PrivEsc
                     </a>
-                    <a href="categories/misc.html" class="category-card">
-                        <i class="fas fa-ellipsis-h"></i>
-                        <h3>Miscellaneous</h3>
+                    <a href="categories/mobile.html" class="category-pill">
+                        <i class="fas fa-mobile-alt"></i> Mobile
                     </a>
-                    <a href="categories/idor.html" class="category-card">
-                        <i class="fas fa-user-shield"></i>
-                        <h3>IDOR & Auth</h3>
-                    </a>                    <a href="categories/privesc.html" class="category-card">
-                        <i class="fas fa-angle-double-up"></i>
-                        <h3>Privilege Escalation</h3>
+                    <a href="categories/misc.html" class="category-pill">
+                        <i class="fas fa-ellipsis-h"></i> Misc
                     </a>
-                    <a href="categories/activedir.html" class="category-card">
-                        <i class="fas fa-sitemap"></i>
-                        <h3>Active Directory</h3>
+                    <a href="categories/idor.html" class="category-pill">
+                        <i class="fas fa-user-shield"></i> IDOR
                     </a>
-                    <a href="categories/system.html" class="category-card">
-                        <i class="fas fa-server"></i>
-                        <h3>System Exploitation</h3>
+                    <a href="categories/activedir.html" class="category-pill">
+                        <i class="fas fa-sitemap"></i> Active Directory
                     </a>
-                    <a href="categories/malware.html" class="category-card">
-                        <i class="fas fa-bug"></i>
-                        <h3>Malware Analysis</h3>
+                    <a href="categories/system.html" class="category-pill">
+                        <i class="fas fa-server"></i> System
                     </a>
-                    <a href="categories/realworld.html" class="category-card">
-                        <i class="fas fa-skull-crossbones"></i>
-                        <h3>Real World / Full Pwn</h3>
+                    <a href="categories/malware.html" class="category-pill">
+                        <i class="fas fa-bug"></i> Malware
+                    </a>
+                    <a href="categories/realworld.html" class="category-pill">
+                        <i class="fas fa-skull-crossbones"></i> Real World
                     </a>
                 </div>
             </section>
 
-            <section class="about">
-                <h2 class="section-title">Quick Start</h2>
-                <p class="about-description">Click any category to access exploitation commands, payloads, and techniques. Copy commands directly, read explanations, and pwn faster.</p>
-                <div class="features">
-                    <div class="feature">
-                        <i class="fas fa-terminal"></i>
-                        <h4>Ready-to-Use Commands</h4>
-                        <p>500+ tested exploitation commands with real-world examples</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-copy"></i>
-                        <h4>One-Click Copy</h4>
-                        <p>Copy any command instantly. No typing, no errors</p>
-                    </div>
-                    <div class="feature">
-                        <i class="fas fa-book-reader"></i>
-                        <h4>Learn Techniques</h4>
-                        <p>Understand how and why each exploit works</p>
-                    </div>
+            <!-- Popular Searches -->
+            <section class="popular-searches" id="popularSearches">
+                <h2 class="section-title">Popular Searches</h2>
+                <div class="search-tags">
+                    <button class="search-tag" data-search="sql injection">SQL Injection</button>
+                    <button class="search-tag" data-search="xss">XSS</button>
+                    <button class="search-tag" data-search="reverse shell">Reverse Shell</button>
+                    <button class="search-tag" data-search="burp suite">Burp Suite</button>
+                    <button class="search-tag" data-search="lfi">LFI</button>
+                    <button class="search-tag" data-search="ssti">SSTI</button>
+                    <button class="search-tag" data-search="rce">RCE</button>
+                    <button class="search-tag" data-search="jwt">JWT</button>
+                    <button class="search-tag" data-search="xxe">XXE</button>
+                    <button class="search-tag" data-search="ssrf">SSRF</button>
                 </div>
             </section>        </div>
     </main>
