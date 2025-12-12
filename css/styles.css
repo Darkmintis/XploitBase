@@ -249,14 +249,17 @@ header .container {
 
 /* Main Content Styles */
 main {
-    padding: 30px 0 0 0; /* Remove bottom padding */
-    flex: 1; /* This makes main content expand to fill available space */
-    background-color: var(--bg-primary); /* Ensure background matches body */
-    margin-bottom: 0; /* Remove any margin at the bottom */
+    padding: 30px 0;
+    flex: 1;
+    background-color: var(--bg-primary);
 }
 
 section {
-    margin-bottom: 0; /* Remove margin that could cause the black line */
+    margin-bottom: 30px;
+}
+
+section:last-child {
+    margin-bottom: 0;
 }
 
 .intro {
@@ -312,10 +315,8 @@ section {
 /* About Section */
 .about {
     background-color: var(--bg-secondary);
-    padding: 40px;
-    border-radius: 12px;
-    margin-top: 60px;
-    margin-bottom: 40px;
+    padding: 30px;
+    border-radius: 8px;
     border: 1px solid var(--border-color);
 }
 
