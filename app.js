@@ -40,13 +40,13 @@ function quickEncode(type) {
     try {
         switch(type) {
             case 'base64':
-                output.value = btoa(unescape(encodeURIComponent(input)));
+                output.value = btoa(input);
                 break;
             case 'url':
                 output.value = encodeURIComponent(input);
                 break;
             case 'hex':
-                output.value = Array.from(input).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+                output.value = Array.from(input).map(c => c.codePointAt(0).toString(16).padStart(2, '0')).join(' ');
                 break;
         }
     } catch(e) {
@@ -61,26 +61,27 @@ function quickDecode(type) {
     try {
         switch(type) {
             case 'base64':
-                output.value = decodeURIComponent(escape(atob(input.trim())));
+                output.value = atob(input.trim());
                 break;
             case 'url':
                 output.value = decodeURIComponent(input);
                 break;
-            case 'hex':
-                const hex = input.replace(/\s/g, '');
-                output.value = hex.match(/.{1,2}/g)?.map(byte => String.fromCharCode(parseInt(byte, 16))).join('') || '';
+            case 'hex': {
+                const hex = input.replaceAll(/\s/g, '');
+                output.value = hex.match(/.{1,2}/g)?.map(byte => String.fromCodePoint(Number.parseInt(byte, 16))).join('') || '';
                 break;
+            }
         }
-    } catch(e) {
-        output.value = 'Error: Invalid input';
+    } catch(err) {
+        output.value = 'Error: Invalid input - ' + err.message;
     }
 }
 
 function quickRot13() {
     const input = document.getElementById('quickInput').value;
-    document.getElementById('quickOutput').value = input.replace(/[a-zA-Z]/g, c => {
+    document.getElementById('quickOutput').value = input.replaceAll(/[a-zA-Z]/g, c => {
         const base = c <= 'Z' ? 65 : 97;
-        return String.fromCharCode((c.charCodeAt(0) - base + 13) % 26 + base);
+        return String.fromCodePoint((c.codePointAt(0) - base + 13) % 26 + base);
     });
 }
 
@@ -141,8 +142,8 @@ function decodeJWT() {
         const payload = JSON.parse(atob(parts[1]));
         
         result.innerHTML = `<strong>Header:</strong>\n${JSON.stringify(header, null, 2)}\n\n<strong>Payload:</strong>\n${JSON.stringify(payload, null, 2)}`;
-    } catch(e) {
-        result.innerHTML = '<span style="color:var(--text-muted)">Invalid JWT token</span>';
+    } catch(err) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Invalid JWT token: ' + err.message + '</span>';
     }
 }
 
@@ -156,13 +157,13 @@ function convertNumber() {
     try {
         let num;
         switch(from) {
-            case 'dec': num = parseInt(input, 10); break;
-            case 'hex': num = parseInt(input.replace(/^0x/i, ''), 16); break;
-            case 'bin': num = parseInt(input.replace(/^0b/i, ''), 2); break;
-            case 'oct': num = parseInt(input.replace(/^0o/i, ''), 8); break;
+            case 'dec': num = Number.parseInt(input, 10); break;
+            case 'hex': num = Number.parseInt(input.replace(/^0x/i, ''), 16); break;
+            case 'bin': num = Number.parseInt(input.replace(/^0b/i, ''), 2); break;
+            case 'oct': num = Number.parseInt(input.replace(/^0o/i, ''), 8); break;
         }
         
-        if (isNaN(num)) throw new Error('Invalid number');
+        if (Number.isNaN(num)) throw new Error('Invalid number');
         
         result.innerHTML = `
             <div class="result-item" onclick="copyText('${num}')"><span class="label">Dec:</span>${num}</div>
@@ -170,8 +171,8 @@ function convertNumber() {
             <div class="result-item" onclick="copyText('0b${num.toString(2)}')"><span class="label">Bin:</span>0b${num.toString(2)}</div>
             <div class="result-item" onclick="copyText('0o${num.toString(8)}')"><span class="label">Oct:</span>0o${num.toString(8)}</div>
         `;
-    } catch(e) {
-        result.innerHTML = '<span style="color:var(--text-muted)">Invalid number</span>';
+    } catch(err) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Invalid number: ' + err.message + '</span>';
     }
 }
 
@@ -179,33 +180,33 @@ function convertNumber() {
 
 function textToBin() {
     const input = document.getElementById('binHexInput').value;
-    const result = Array.from(input).map(c => c.charCodeAt(0).toString(2).padStart(8, '0')).join(' ');
+    const result = Array.from(input).map(c => c.codePointAt(0).toString(2).padStart(8, '0')).join(' ');
     document.getElementById('binHexResult').innerHTML = `<div class="result-item" onclick="copyText('${result}')">${result}</div>`;
 }
 
 function binToText() {
-    const input = document.getElementById('binHexInput').value.replace(/\s/g, '');
+    const input = document.getElementById('binHexInput').value.replaceAll(/\s/g, '');
     try {
-        const result = input.match(/.{1,8}/g)?.map(b => String.fromCharCode(parseInt(b, 2))).join('') || '';
+        const result = input.match(/.{1,8}/g)?.map(b => String.fromCodePoint(Number.parseInt(b, 2))).join('') || '';
         document.getElementById('binHexResult').innerHTML = `<div class="result-item" onclick="copyText('${result}')">${result}</div>`;
-    } catch(e) {
-        document.getElementById('binHexResult').innerHTML = '<span style="color:var(--text-muted)">Invalid binary</span>';
+    } catch(err) {
+        document.getElementById('binHexResult').innerHTML = '<span style="color:var(--text-muted)">Invalid binary: ' + err.message + '</span>';
     }
 }
 
 function textToHex() {
     const input = document.getElementById('binHexInput').value;
-    const result = Array.from(input).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+    const result = Array.from(input).map(c => c.codePointAt(0).toString(16).padStart(2, '0')).join(' ');
     document.getElementById('binHexResult').innerHTML = `<div class="result-item" onclick="copyText('${result}')">${result}</div>`;
 }
 
 function hexToText() {
-    const input = document.getElementById('binHexInput').value.replace(/\s/g, '');
+    const input = document.getElementById('binHexInput').value.replaceAll(/\s/g, '');
     try {
-        const result = input.match(/.{1,2}/g)?.map(b => String.fromCharCode(parseInt(b, 16))).join('') || '';
+        const result = input.match(/.{1,2}/g)?.map(b => String.fromCodePoint(Number.parseInt(b, 16))).join('') || '';
         document.getElementById('binHexResult').innerHTML = `<div class="result-item" onclick="copyText('${result}')">${result}</div>`;
-    } catch(e) {
-        document.getElementById('binHexResult').innerHTML = '<span style="color:var(--text-muted)">Invalid hex</span>';
+    } catch(err) {
+        document.getElementById('binHexResult').innerHTML = '<span style="color:var(--text-muted)">Invalid hex: ' + err.message + '</span>';
     }
 }
 
@@ -217,11 +218,12 @@ function caesarBrute() {
     
     let html = '';
     for (let shift = 1; shift <= 25; shift++) {
-        const decoded = input.replace(/[a-zA-Z]/g, c => {
+        const decoded = input.replaceAll(/[a-zA-Z]/g, c => {
             const base = c <= 'Z' ? 65 : 97;
-            return String.fromCharCode((c.charCodeAt(0) - base + shift) % 26 + base);
+            return String.fromCodePoint((c.codePointAt(0) - base + shift) % 26 + base);
         });
-        html += `<div class="result-item" onclick="copyText('${decoded.replace(/'/g, "\\'")}')"><span class="label">ROT${shift}:</span>${decoded}</div>`;
+        const escapedDecoded = decoded.replaceAll("'", String.raw`\'`);
+        html += `<div class="result-item" onclick="copyText('${escapedDecoded}')"><span class="label">ROT${shift}:</span>${decoded}</div>`;
     }
     result.innerHTML = html;
 }
@@ -239,14 +241,14 @@ function xorEncode() {
     }
     
     const xored = Array.from(text).map((c, i) => {
-        return String.fromCharCode(c.charCodeAt(0) ^ key.charCodeAt(i % key.length));
+        return String.fromCodePoint(c.codePointAt(0) ^ key.codePointAt(i % key.length));
     }).join('');
     
-    const hexResult = Array.from(xored).map(c => c.charCodeAt(0).toString(16).padStart(2, '0')).join(' ');
+    const hexResult = Array.from(xored).map(c => c.codePointAt(0).toString(16).padStart(2, '0')).join(' ');
     
     result.innerHTML = `
         <div class="result-item" onclick="copyText('${hexResult}')"><span class="label">Hex:</span>${hexResult}</div>
-        <div class="result-item"><span class="label">Raw:</span>${xored.replace(/</g, '&lt;')}</div>
+        <div class="result-item"><span class="label">Raw:</span>${xored.replaceAll('<', '&lt;')}</div>
     `;
 }
 
@@ -267,7 +269,8 @@ function genShell(type) {
     };
     
     const shell = shells[type] || 'Unknown shell type';
-    result.innerHTML = `<div onclick="copyText(\`${shell.replace(/`/g, '\\`')}\`)" style="cursor:pointer">${shell}</div>`;
+    const escapedShell = shell.replaceAll('`', '\\`');
+    result.innerHTML = '<div onclick="copyText(`' + escapedShell + '`)" style="cursor:pointer">' + shell + '</div>';
 }
 
 // ========== XSS PAYLOADS ==========
@@ -287,9 +290,11 @@ function genXSS() {
         `<svg/onload=alert('XSS')>`
     ];
     
-    result.innerHTML = payloads.map(p => 
-        `<div class="result-item" onclick="copyText(\`${p.replace(/`/g, '\\`')}\`)">${p.replace(/</g, '&lt;')}</div>`
-    ).join('');
+    result.innerHTML = payloads.map(p => {
+        const escapedPayload = p.replaceAll('`', '\\`');
+        const displayPayload = p.replaceAll('<', '&lt;');
+        return '<div class="result-item" onclick="copyText(`' + escapedPayload + '`)">' + displayPayload + '</div>';
+    }).join('');
 }
 
 // ========== SQLI PAYLOADS ==========
@@ -328,9 +333,10 @@ function genSQLi() {
         ]
     };
     
-    result.innerHTML = (payloads[type] || []).map(p => 
-        `<div class="result-item" onclick="copyText(\`${p.replace(/`/g, '\\`')}\`)">${p}</div>`
-    ).join('');
+    result.innerHTML = (payloads[type] || []).map(p => {
+        const escapedPayload = p.replaceAll('`', '\\`');
+        return '<div class="result-item" onclick="copyText(`' + escapedPayload + '`)">' + p + '</div>';
+    }).join('');
 }
 
 // ========== STRING ANALYZER ==========
@@ -348,11 +354,11 @@ function analyzeString() {
     const bytes = new TextEncoder().encode(input).length;
     const hasUpper = /[A-Z]/.test(input);
     const hasLower = /[a-z]/.test(input);
-    const hasDigit = /[0-9]/.test(input);
+    const hasDigit = /\d/.test(input);
     const hasSpecial = /[^A-Za-z0-9]/.test(input);
     const isBase64 = /^[A-Za-z0-9+/]+=*$/.test(input) && len % 4 === 0;
     const isHex = /^[0-9a-fA-F\s]+$/.test(input);
-    const isPrintable = /^[\x20-\x7E\s]+$/.test(input);
+    const isPrintable = /^[\x20-\x7E]+$/.test(input);
     
     // Calculate entropy
     const freq = {};
@@ -386,27 +392,31 @@ function decodeFlag() {
     
     // Try Base64
     try {
-        const b64 = atob(input.replace(/[^A-Za-z0-9+/=]/g, ''));
+        const b64 = atob(input.replaceAll(/[^A-Za-z0-9+/=]/g, ''));
         if (b64 && /[\x20-\x7E]/.test(b64)) {
             html += `<div class="result-item" onclick="copyText('${b64}')"><span class="label">Base64:</span>${b64}</div>`;
         }
-    } catch(e) {}
+    } catch(err) {
+        console.debug('Base64 decode failed:', err.message); // Silently fail if not valid Base64
+    }
     
     // Try Hex
-    const cleanHex = input.replace(/[^0-9a-fA-F]/g, '');
+    const cleanHex = input.replaceAll(/[^0-9a-fA-F]/g, '');
     if (cleanHex.length >= 2 && cleanHex.length % 2 === 0) {
         try {
-            const fromHex = cleanHex.match(/.{2}/g).map(b => String.fromCharCode(parseInt(b, 16))).join('');
+            const fromHex = cleanHex.match(/.{2}/g).map(b => String.fromCodePoint(Number.parseInt(b, 16))).join('');
             if (/[\x20-\x7E]/.test(fromHex)) {
                 html += `<div class="result-item" onclick="copyText('${fromHex}')"><span class="label">Hex:</span>${fromHex}</div>`;
             }
-        } catch(e) {}
+        } catch(err) {
+            console.debug('Hex decode failed:', err.message); // Silently fail if not valid hex
+        }
     }
     
     // Try ROT13
-    const rot13 = input.replace(/[a-zA-Z]/g, c => {
+    const rot13 = input.replaceAll(/[a-zA-Z]/g, c => {
         const base = c <= 'Z' ? 65 : 97;
-        return String.fromCharCode((c.charCodeAt(0) - base + 13) % 26 + base);
+        return String.fromCodePoint((c.codePointAt(0) - base + 13) % 26 + base);
     });
     html += `<div class="result-item" onclick="copyText('${rot13}')"><span class="label">ROT13:</span>${rot13}</div>`;
     
@@ -416,7 +426,9 @@ function decodeFlag() {
         if (urlDec !== input) {
             html += `<div class="result-item" onclick="copyText('${urlDec}')"><span class="label">URL:</span>${urlDec}</div>`;
         }
-    } catch(e) {}
+    } catch(err) {
+        console.debug('URL decode failed:', err.message); // Invalid URL encoding - skip
+    }
     
     // Reverse
     const reversed = input.split('').reverse().join('');
@@ -438,12 +450,12 @@ function asciiLookup() {
     
     let charCode;
     
-    if (/^0x[0-9a-fA-F]+$/i.test(input)) {
-        charCode = parseInt(input, 16);
+    if (/^0x[\da-f]+$/i.test(input)) {
+        charCode = Number.parseInt(input, 16);
     } else if (/^\d+$/.test(input)) {
-        charCode = parseInt(input, 10);
+        charCode = Number.parseInt(input, 10);
     } else {
-        charCode = input.charCodeAt(0);
+        charCode = input.codePointAt(0);
     }
     
     if (charCode < 0 || charCode > 127) {
@@ -451,7 +463,14 @@ function asciiLookup() {
         return;
     }
     
-    const char = charCode >= 32 && charCode < 127 ? String.fromCharCode(charCode) : (charCode === 32 ? 'SPACE' : 'CTRL');
+    let char;
+    if (charCode >= 32 && charCode < 127) {
+        char = String.fromCodePoint(charCode);
+    } else if (charCode === 32) {
+        char = 'SPACE';
+    } else {
+        char = 'CTRL';
+    }
     
     result.innerHTML = `
         <div class="result-item"><span class="label">Char:</span>${char}</div>
@@ -492,7 +511,7 @@ function genWordlist() {
         '!' + base,
         base + base,
         base.split('').reverse().join(''),
-        base.replace(/a/gi, '@').replace(/e/gi, '3').replace(/i/gi, '1').replace(/o/gi, '0').replace(/s/gi, '$'),
+        base.replaceAll(/a/gi, '@').replaceAll(/e/gi, '3').replaceAll(/i/gi, '1').replaceAll(/o/gi, '0').replaceAll(/s/gi, '$'),
         base + '_',
         '_' + base,
         base + '.',
