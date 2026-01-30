@@ -30,27 +30,15 @@ jobs:
           # Copy HTML files
           cp index.html main-repo/dist/xploitbase/
           
-          # Copy CSS files
-          cp -r css main-repo/dist/xploitbase/
+          # Copy CSS file
+          cp styles.css main-repo/dist/xploitbase/
           
-          # Copy JavaScript files
-          cp -r js main-repo/dist/xploitbase/
-          
-          # Copy category pages
-          cp -r categories main-repo/dist/xploitbase/
-          
-          # Copy tools pages
-          cp -r tools main-repo/dist/xploitbase/
-          
-          # Copy service worker if exists
-          [ -f sw.js ] && cp sw.js main-repo/dist/xploitbase/ || true
+          # Copy JavaScript file
+          cp app.js main-repo/dist/xploitbase/
           
           # Copy documentation
           cp LICENSE main-repo/dist/xploitbase/
           cp README.md main-repo/dist/xploitbase/
-          
-          # Copy .gitignore if exists
-          [ -f .gitignore ] && cp .gitignore main-repo/dist/xploitbase/ || true
           
           echo "✅ XploitBase production files copied successfully"
           echo "📦 Deployed files:"
@@ -86,22 +74,20 @@ jobs:
           echo "- **Time**: $(date -u '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 🚀 Key Features" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ 16 CTF Categories with 100+ tools" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ 500+ Commands with explanations" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Offline Support (PWA + Service Worker)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Fast 2-Click Access to any tool" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Quick Encode/Decode Tools (Base64, URL, Hex, ROT13)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ CTF Tools (Hash ID, JWT Decoder, Number Converter, etc.)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Payload Generators (Reverse Shells, XSS, SQLi)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Wordlist & Path Generators" >> $GITHUB_STEP_SUMMARY
           echo "- ✅ Dark/Light Theme Toggle" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ CTF Timer with Task Tracking" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Notes & Favorites System" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Keyboard Shortcuts for power users" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ All tools work client-side (no server needed)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ One-click copy functionality" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ Quick Reference Cheatsheets" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 📦 Deployed Files" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ HTML Pages (index, help, search, 16 category pages)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ CSS Stylesheets (styles, features, command-enhancements)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ JavaScript Modules (data, main, category, favorites, timer, notes, etc.)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Images & Icons (192x192, 512x512 PWA icons)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ PWA Support (manifest.json, service worker)" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Documentation (README.md, LICENSE)" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ index.html - Main page with all tools" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ styles.css - Clean dark/light theme styling" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ app.js - All tool functionality" >> $GITHUB_STEP_SUMMARY
+          echo "- ✅ README.md, LICENSE - Documentation" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### 💡 For CTF Players" >> $GITHUB_STEP_SUMMARY
-          echo "XploitBase is a **self-contained offline toolkit** perfect for CTF competitions. Access all tools and commands without internet, organize your workflow, track time, and solve challenges efficiently!" >> $GITHUB_STEP_SUMMARY
+          echo "XploitBase is a **lightweight browser-based CTF toolkit** with working tools, not just command references. Everything runs client-side - no server, no installation required!" >> $GITHUB_STEP_SUMMARY
