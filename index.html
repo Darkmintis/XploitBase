@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XploitBase - CTF Toolkit</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
@@ -127,6 +127,30 @@
                         <div id="binHexResult" class="result"></div>
                     </div>
 
+                    <!-- String Analyzer -->
+                    <div class="tool-box">
+                        <h3><i class="fas fa-search"></i> String Analyzer</h3>
+                        <textarea id="analyzeInput" rows="2" placeholder="Enter text to analyze..."></textarea>
+                        <button class="btn" onclick="analyzeString()">Analyze</button>
+                        <div id="analyzeResult" class="result"></div>
+                    </div>
+
+                    <!-- Flag Decoder -->
+                    <div class="tool-box">
+                        <h3><i class="fas fa-flag"></i> Flag Decoder</h3>
+                        <input type="text" id="flagInput" placeholder="flag{...} or encoded flag">
+                        <button class="btn" onclick="decodeFlag()">Decode</button>
+                        <div id="flagResult" class="result scroll"></div>
+                    </div>
+
+                    <!-- ASCII Table -->
+                    <div class="tool-box">
+                        <h3><i class="fas fa-table"></i> ASCII Lookup</h3>
+                        <input type="text" id="asciiInput" placeholder="Enter char, decimal, or hex...">
+                        <button class="btn" onclick="asciiLookup()">Lookup</button>
+                        <div id="asciiResult" class="result"></div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -174,6 +198,27 @@
                         <div id="sqliResult" class="result code scroll"></div>
                     </div>
 
+                    <!-- Wordlist Patterns -->
+                    <div class="tool-box">
+                        <h3><i class="fas fa-list"></i> Wordlist Generator</h3>
+                        <input type="text" id="wordBase" placeholder="Base word (e.g., password)">
+                        <button class="btn" onclick="genWordlist()">Generate Variations</button>
+                        <div id="wordlistResult" class="result code scroll"></div>
+                    </div>
+
+                    <!-- Directory Fuzzing Paths -->
+                    <div class="tool-box">
+                        <h3><i class="fas fa-folder-open"></i> Common Paths</h3>
+                        <select id="pathType">
+                            <option value="web">Web Directories</option>
+                            <option value="api">API Endpoints</option>
+                            <option value="backup">Backup Files</option>
+                            <option value="config">Config Files</option>
+                        </select>
+                        <button class="btn" onclick="genPaths()">Generate</button>
+                        <div id="pathsResult" class="result code scroll"></div>
+                    </div>
+
                 </div>
             </div>
         </section>
@@ -189,24 +234,30 @@
 22  SSH       443  HTTPS
 23  Telnet    445  SMB
 25  SMTP      3306 MySQL
-53  DNS       3389 RDP</pre>
+53  DNS       3389 RDP
+139 NetBIOS   5432 PostgreSQL
+111 RPC       27017 MongoDB</pre>
                     </div>
                     <div class="cheat-box">
                         <h4>File Signatures (Magic Bytes)</h4>
-                        <pre>PNG: 89 50 4E 47
-JPG: FF D8 FF
-GIF: 47 49 46 38
-PDF: 25 50 44 46
+                        <pre>PNG: 89 50 4E 47 0D 0A 1A 0A
+JPG: FF D8 FF E0/E1
+GIF: 47 49 46 38 39/37 61
+PDF: 25 50 44 46 2D
 ZIP: 50 4B 03 04
-ELF: 7F 45 4C 46</pre>
+RAR: 52 61 72 21 1A 07
+ELF: 7F 45 4C 46
+EXE: 4D 5A</pre>
                     </div>
                     <div class="cheat-box">
                         <h4>Hash Lengths</h4>
-                        <pre>MD5:    32 chars
-SHA1:   40 chars
-SHA256: 64 chars
-SHA512: 128 chars
-NTLM:   32 chars</pre>
+                        <pre>MD5:      32 hex / 128 bit
+SHA1:     40 hex / 160 bit
+SHA256:   64 hex / 256 bit
+SHA512:   128 hex / 512 bit
+NTLM:     32 hex / 128 bit
+bcrypt:   60 chars ($2a$...)
+MySQL5:   41 chars (*...)</pre>
                     </div>
                     <div class="cheat-box">
                         <h4>Linux Privesc Checks</h4>
@@ -214,22 +265,56 @@ NTLM:   32 chars</pre>
 find / -perm -4000 2>/dev/null
 cat /etc/crontab
 ls -la /etc/passwd
-getcap -r / 2>/dev/null</pre>
+getcap -r / 2>/dev/null
+cat /etc/sudoers
+ps aux | grep root
+env | grep -i pass</pre>
                     </div>
                     <div class="cheat-box">
-                        <h4>Useful Nmap Scans</h4>
-                        <pre>nmap -sC -sV -oN scan.txt IP
+                        <h4>Useful Nmap Commands</h4>
+                        <pre>nmap -sC -sV -oN scan IP
 nmap -p- --min-rate 5000 IP
 nmap -sU --top-ports 100 IP
-nmap --script vuln IP</pre>
+nmap --script vuln IP
+nmap -sV --script=banner IP
+nmap -Pn -sS -F IP</pre>
                     </div>
                     <div class="cheat-box">
-                        <h4>Common LFI Paths</h4>
+                        <h4>Common LFI/Path Traversal</h4>
                         <pre>/etc/passwd
 /etc/shadow
 /var/log/apache2/access.log
 /proc/self/environ
-../../../../../../etc/passwd</pre>
+....//....//etc/passwd
+..%252f..%252fetc/passwd
+/etc/nginx/nginx.conf</pre>
+                    </div>
+                    <div class="cheat-box">
+                        <h4>Useful One-Liners</h4>
+                        <pre># Find SUID binaries
+find / -perm -u=s 2>/dev/null
+
+# Spawn TTY
+python3 -c 'import pty;pty.spawn("/bin/bash")'
+
+# Stabilize shell
+stty raw -echo; fg</pre>
+                    </div>
+                    <div class="cheat-box">
+                        <h4>Common Encodings</h4>
+                        <pre>Base64: A-Za-z0-9+/=
+Base32: A-Z2-7=
+Hex: 0-9a-f
+URL: %XX
+HTML: &amp;#XX; or &amp;name;</pre>
+                    </div>
+                    <div class="cheat-box">
+                        <h4>Flag Formats</h4>
+                        <pre>CTF{...}    flag{...}
+HTB{...}    THM{...}
+picoCTF{...}
+FLAG{...}   Flag{...}
+[A-Za-z]+\{[^}]+\}</pre>
                     </div>
                 </div>
             </div>
@@ -242,7 +327,7 @@ nmap --script vuln IP</pre>
         </div>
     </footer>
 
-    <script src="js/app.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
 

